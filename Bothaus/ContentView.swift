@@ -22,16 +22,8 @@ struct ContentView: View {
 
             Spacer()
 
-            Button(action: {
-                if appModel.isRecording {
-                    appModel.stopRecording()
-                } else {
-                    appModel.startRecording()
-                }
-            }) {
-                Text(appModel.isRecording ? "Stop Recording" : "Start Recording")
-            }
-            .padding()
+            ChatButton(state: appModel.chatState, appModel: appModel)
+                .padding()
         }
     }
 }
@@ -39,5 +31,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(AppModel())
     }
 }

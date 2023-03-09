@@ -9,6 +9,10 @@ import AVFoundation
 class TextToSpeech {
     private let speechSynthesizer = AVSpeechSynthesizer()
 
+    init(delegate: AVSpeechSynthesizerDelegate) {
+        speechSynthesizer.delegate = delegate
+    }
+
     func speak(text: String, voiceIdentifier: String) {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
@@ -22,6 +26,10 @@ class TextToSpeech {
         speechSynthesizer.speak(utterance)
 
         disableAVSession()
+    }
+
+    func stopSpeaking() {
+        speechSynthesizer.stopSpeaking(at: .immediate)
     }
 
     private func disableAVSession() {

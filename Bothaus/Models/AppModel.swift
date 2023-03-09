@@ -10,9 +10,17 @@ import SwiftUI
 import Speech
 import OpenAIKit
 
+enum ChatState {
+    case standby
+    case listening
+    case waitingForResponse
+    case speaking
+}
 
 final class AppModel: ObservableObject, SpeechRecognizerDelegate {
-    @Published var isRecording: Bool = false
+    private let voiceIdentifier = AVSpeechSynthesisVoiceIdentifierAlex
+
+    @Published var chatState = ChatState.standby
     @Published var promptText: String = ""
     @Published var responseText: String = ""
     @Published var messages: [Chat.Message] = []
@@ -20,38 +28,40 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
 
     private var speechRecognizer: SpeechRecognizer?
     private var openAIAPIClient: OpenAIAPIClient?
-    private let textToSpeech: TextToSpeech
-    
-    init() {
-        self.textToSpeech = TextToSpeech()
+    private var speechDelegate: SpeechDelegate?
+    private var textToSpeech: TextToSpeech?
+
+    init(chatState: ChatState = .standby) {
+        self.chatState = chatState
         setup()
     }
 
     func setup() {
-        self.openAIAPIClient = setupOpenAIAPIClient()
-        self.speechRecognizer = SpeechRecognizer(delegate: self)
+        speechRecognizer = SpeechRecognizer(delegate: self)
+        openAIAPIClient = setupOpenAIAPIClient()
+        speechDelegate = SpeechDelegate(appModel: self)
+        textToSpeech = TextToSpeech(delegate: speechDelegate!)
     }
 
     func loaded() {
-        textToSpeech.speak(text: "Loaded", voiceIdentifier: AVSpeechSynthesisVoiceIdentifierAlex)
+        textToSpeech?.speak(text: "Loaded", voiceIdentifier: AVSpeechSynthesisVoiceIdentifierAlex)
     }
 
-    func setupOpenAIAPIClient() -> OpenAIAPIClient {
+    func setupOpenAIAPIClient() -> OpenAIAPIClient? {
         var apiKey = ""
         var organization = ""
         let url = Bundle.main.url(forResource: "Secrets", withExtension: "plist")
         if let path = url?.path, let data = FileManager.default.contents(atPath: path) {
             do {
                 let plist = try PropertyListSerialization.propertyList(from: data, format: nil)
-//                guard let secrets = plist as? [String: String] else {
-//                    return
-//                }
-                let secrets = plist as? [String: String]
-                apiKey = secrets!["openai-api-key"]!
-                organization = secrets!["openai-organization"]!
+                guard let secrets = plist as? [String: String] else {
+                    return nil
+                }
+                apiKey = secrets["openai-api-key"]!
+                organization = secrets["openai-organization"]!
             } catch {
                 print("Error reading regions plist file: \(error)")
-//                return
+                return nil
             }
         }
         return OpenAIAPIClient(apiKey: apiKey, organization: organization)
@@ -62,7 +72,7 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
         for voice in voices where voice.language == "en-US" {
             print("\(voice.language) - \(voice.name) - \(voice.quality.rawValue) [\(voice.identifier)]")
             let phrase = "The voice you're now listening to is the one called \(voice.name)."
-            textToSpeech.speak(text: phrase, voiceIdentifier: voice.identifier)
+            self.speak(text: phrase)
         }
     }
     
@@ -77,36 +87,15 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
     func stopRecording() {
         speechRecognizer?.stopRecording()
     }
-    
-    func sendToChatGPTAPI() {
-        buildMessageHistory()
-        Task {
-            do {
-                let response = try await openAIAPIClient?.sendToChatGPTAPI(system: systemMessage, messages: messages)
-                DispatchQueue.main.async {
-                    self.responseText = response!
-                    self.textToSpeech.speak(text: self.responseText,
-                                            voiceIdentifier: AVSpeechSynthesisVoiceIdentifierAlex)
-                }
-            } catch {
-                print("chatgpt error")
-            }
-        }
-    }
 
-    private func buildMessageHistory() {
-        let newMessage = Chat.Message(role: "user", content: promptText)
-        messages.append(newMessage)
-    }
-
-    // SpeechRecognizerDelegate
+    // MARK: - SpeechRecognizerDelegate
 
     func didStartRecording() {
-        self.isRecording = true
+        self.chatState = .listening
     }
 
     func didStopRecording() {
-        self.isRecording = false
+        self.chatState = .waitingForResponse
     }
 
     func didReceiveTranscription(_ transcription: String, isFinal: Bool) {
@@ -118,6 +107,7 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
 
     func didFailWithError(_ error: Error) {
         print(">>> AppModel: \(error)")
+        self.chatState = .standby
 //        speakError(error)
     }
 
@@ -131,5 +121,57 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
 //            }
 //            self.promptText = "<< \(errorMessage) >>"
 //        }
+    }
+
+
+    // MARK: - ChatGPT Request
+
+    private func buildMessageHistory() {
+        let newMessage = Chat.Message(role: "user", content: promptText)
+        messages.append(newMessage)
+        print(messages)
+    }
+
+    func sendToChatGPTAPI() {
+        DispatchQueue.main.async {
+            self.chatState = .waitingForResponse
+        }
+        buildMessageHistory()
+        Task {
+            do {
+                if let response = try await openAIAPIClient?.sendToChatGPTAPI(system: systemMessage, messages: messages) {
+                    DispatchQueue.main.async {
+                        self.messages.append(response)
+                        self.responseText = response.content
+                        self.speak(text: self.responseText)
+                    }
+                } else {
+                    print("no response")
+                    self.chatState = .standby
+                }
+            } catch {
+                print("chatgpt error")
+                self.chatState = .standby
+            }
+        }
+    }
+
+    // MARK: - Speech
+
+    func speak(text: String) {
+        self.textToSpeech?.speak(text: self.responseText, voiceIdentifier: voiceIdentifier)
+    }
+
+    func stopSpeaking() {
+        self.textToSpeech?.stopSpeaking()
+        chatState = .standby
+    }
+
+    func didStartSpeech() {
+        self.chatState = .speaking
+    }
+
+    func didStopSpeech() {
+        self.chatState = .standby
     }
 }
