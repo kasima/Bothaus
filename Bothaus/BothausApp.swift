@@ -16,7 +16,7 @@ struct BothausApp: App {
             ContentView()
                 .environmentObject(appModel)
                 .onAppear() {
-                    appModel.speakResponse(responseText: "Loaded")
+                    appModel.loaded()
 //                    appModel.voiceTest()
                 }
         }

@@ -14,13 +14,22 @@
 		86944FCA29B989A200201F2E /* BothausTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FC929B989A200201F2E /* BothausTests.swift */; };
 		86944FD429B989A200201F2E /* BothausUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FD329B989A200201F2E /* BothausUITests.swift */; };
 		86944FD629B989A200201F2E /* BothausUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FD529B989A200201F2E /* BothausUITestsLaunchTests.swift */; };
-		86944FE329B989F100201F2E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FE229B989F100201F2E /* AppModel.swift */; };
-		86944FE429B989F100201F2E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FE229B989F100201F2E /* AppModel.swift */; };
-		86944FE529B989F100201F2E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FE229B989F100201F2E /* AppModel.swift */; };
 		86944FE729B98A3200201F2E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86944FE629B98A3200201F2E /* Secrets.plist */; };
 		86944FE829B98A3200201F2E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86944FE629B98A3200201F2E /* Secrets.plist */; };
 		86944FE929B98A3200201F2E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86944FE629B98A3200201F2E /* Secrets.plist */; };
 		86944FEC29B98A6900201F2E /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 86944FEB29B98A6900201F2E /* OpenAIKit */; };
+		86944FEE29B995F600201F2E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FED29B995F600201F2E /* SpeechRecognizer.swift */; };
+		86944FEF29B995F600201F2E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FED29B995F600201F2E /* SpeechRecognizer.swift */; };
+		86944FF029B995F600201F2E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FED29B995F600201F2E /* SpeechRecognizer.swift */; };
+		86944FF229B9962900201F2E /* OpenAIAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF129B9962900201F2E /* OpenAIAPIClient.swift */; };
+		86944FF329B9962A00201F2E /* OpenAIAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF129B9962900201F2E /* OpenAIAPIClient.swift */; };
+		86944FF429B9962A00201F2E /* OpenAIAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF129B9962900201F2E /* OpenAIAPIClient.swift */; };
+		86944FF629B9967900201F2E /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF529B9967900201F2E /* TextToSpeech.swift */; };
+		86944FF729B9967900201F2E /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF529B9967900201F2E /* TextToSpeech.swift */; };
+		86944FF829B9967900201F2E /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF529B9967900201F2E /* TextToSpeech.swift */; };
+		86944FFA29B996CF00201F2E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF929B996CF00201F2E /* AppModel.swift */; };
+		86944FFB29B996CF00201F2E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF929B996CF00201F2E /* AppModel.swift */; };
+		86944FFC29B996CF00201F2E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF929B996CF00201F2E /* AppModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,8 +60,11 @@
 		86944FCF29B989A200201F2E /* BothausUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BothausUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		86944FD329B989A200201F2E /* BothausUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothausUITests.swift; sourceTree = "<group>"; };
 		86944FD529B989A200201F2E /* BothausUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothausUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		86944FE229B989F100201F2E /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		86944FE629B98A3200201F2E /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Secrets.plist; path = Bothaus/Secrets.plist; sourceTree = SOURCE_ROOT; };
+		86944FED29B995F600201F2E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
+		86944FF129B9962900201F2E /* OpenAIAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIAPIClient.swift; sourceTree = "<group>"; };
+		86944FF529B9967900201F2E /* TextToSpeech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextToSpeech.swift; sourceTree = "<group>"; };
+		86944FF929B996CF00201F2E /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,7 +116,7 @@
 		86944FB729B989A100201F2E /* Bothaus */ = {
 			isa = PBXGroup;
 			children = (
-				86944FE229B989F100201F2E /* AppModel.swift */,
+				86944FFD29B9CE8900201F2E /* Models */,
 				86944FB829B989A100201F2E /* BothausApp.swift */,
 				86944FBA29B989A100201F2E /* ContentView.swift */,
 				86944FBC29B989A200201F2E /* Assets.xcassets */,
@@ -137,6 +149,17 @@
 				86944FD529B989A200201F2E /* BothausUITestsLaunchTests.swift */,
 			);
 			path = BothausUITests;
+			sourceTree = "<group>";
+		};
+		86944FFD29B9CE8900201F2E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				86944FF129B9962900201F2E /* OpenAIAPIClient.swift */,
+				86944FF529B9967900201F2E /* TextToSpeech.swift */,
+				86944FED29B995F600201F2E /* SpeechRecognizer.swift */,
+				86944FF929B996CF00201F2E /* AppModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,8 +301,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86944FFA29B996CF00201F2E /* AppModel.swift in Sources */,
+				86944FF229B9962900201F2E /* OpenAIAPIClient.swift in Sources */,
+				86944FF629B9967900201F2E /* TextToSpeech.swift in Sources */,
 				86944FBB29B989A100201F2E /* ContentView.swift in Sources */,
-				86944FE329B989F100201F2E /* AppModel.swift in Sources */,
+				86944FEE29B995F600201F2E /* SpeechRecognizer.swift in Sources */,
 				86944FB929B989A100201F2E /* BothausApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,8 +314,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86944FF329B9962A00201F2E /* OpenAIAPIClient.swift in Sources */,
+				86944FFB29B996CF00201F2E /* AppModel.swift in Sources */,
+				86944FF729B9967900201F2E /* TextToSpeech.swift in Sources */,
 				86944FCA29B989A200201F2E /* BothausTests.swift in Sources */,
-				86944FE429B989F100201F2E /* AppModel.swift in Sources */,
+				86944FEF29B995F600201F2E /* SpeechRecognizer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,8 +326,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86944FFC29B996CF00201F2E /* AppModel.swift in Sources */,
+				86944FF429B9962A00201F2E /* OpenAIAPIClient.swift in Sources */,
+				86944FF829B9967900201F2E /* TextToSpeech.swift in Sources */,
 				86944FD429B989A200201F2E /* BothausUITests.swift in Sources */,
-				86944FE529B989F100201F2E /* AppModel.swift in Sources */,
+				86944FF029B995F600201F2E /* SpeechRecognizer.swift in Sources */,
 				86944FD629B989A200201F2E /* BothausUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
