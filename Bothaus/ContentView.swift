@@ -8,14 +8,31 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var appModel: AppModel
+
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Text("Prompt: \(appModel.promptText)")
+                .padding()
+
+            Spacer()
+
+            Text("Response: \(appModel.responseText)")
+                .padding()
+
+            Spacer()
+
+            Button(action: {
+                if appModel.isRecording {
+                    appModel.stopRecording()
+                } else {
+                    appModel.startRecording()
+                }
+            }) {
+                Text(appModel.isRecording ? "Stop Recording" : "Start Recording")
+            }
+            .padding()
         }
-        .padding()
     }
 }
 

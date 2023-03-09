@@ -14,6 +14,13 @@
 		86944FCA29B989A200201F2E /* BothausTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FC929B989A200201F2E /* BothausTests.swift */; };
 		86944FD429B989A200201F2E /* BothausUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FD329B989A200201F2E /* BothausUITests.swift */; };
 		86944FD629B989A200201F2E /* BothausUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FD529B989A200201F2E /* BothausUITestsLaunchTests.swift */; };
+		86944FE329B989F100201F2E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FE229B989F100201F2E /* AppModel.swift */; };
+		86944FE429B989F100201F2E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FE229B989F100201F2E /* AppModel.swift */; };
+		86944FE529B989F100201F2E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FE229B989F100201F2E /* AppModel.swift */; };
+		86944FE729B98A3200201F2E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86944FE629B98A3200201F2E /* Secrets.plist */; };
+		86944FE829B98A3200201F2E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86944FE629B98A3200201F2E /* Secrets.plist */; };
+		86944FE929B98A3200201F2E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86944FE629B98A3200201F2E /* Secrets.plist */; };
+		86944FEC29B98A6900201F2E /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 86944FEB29B98A6900201F2E /* OpenAIKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +51,8 @@
 		86944FCF29B989A200201F2E /* BothausUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BothausUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		86944FD329B989A200201F2E /* BothausUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothausUITests.swift; sourceTree = "<group>"; };
 		86944FD529B989A200201F2E /* BothausUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothausUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		86944FE229B989F100201F2E /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		86944FE629B98A3200201F2E /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Secrets.plist; path = Bothaus/Secrets.plist; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86944FEC29B98A6900201F2E /* OpenAIKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,9 +104,11 @@
 		86944FB729B989A100201F2E /* Bothaus */ = {
 			isa = PBXGroup;
 			children = (
+				86944FE229B989F100201F2E /* AppModel.swift */,
 				86944FB829B989A100201F2E /* BothausApp.swift */,
 				86944FBA29B989A100201F2E /* ContentView.swift */,
 				86944FBC29B989A200201F2E /* Assets.xcassets */,
+				86944FE629B98A3200201F2E /* Secrets.plist */,
 				86944FBE29B989A200201F2E /* Preview Content */,
 			);
 			path = Bothaus;
@@ -143,6 +155,9 @@
 			dependencies = (
 			);
 			name = Bothaus;
+			packageProductDependencies = (
+				86944FEB29B98A6900201F2E /* OpenAIKit */,
+			);
 			productName = Bothaus;
 			productReference = 86944FB529B989A100201F2E /* Bothaus.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +230,9 @@
 				Base,
 			);
 			mainGroup = 86944FAC29B989A100201F2E;
+			packageReferences = (
+				86944FEA29B98A6900201F2E /* XCRemoteSwiftPackageReference "openai-kit" */,
+			);
 			productRefGroup = 86944FB629B989A100201F2E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -232,6 +250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				86944FC029B989A200201F2E /* Preview Assets.xcassets in Resources */,
+				86944FE729B98A3200201F2E /* Secrets.plist in Resources */,
 				86944FBD29B989A200201F2E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -240,6 +259,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86944FE829B98A3200201F2E /* Secrets.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +267,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86944FE929B98A3200201F2E /* Secrets.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				86944FBB29B989A100201F2E /* ContentView.swift in Sources */,
+				86944FE329B989F100201F2E /* AppModel.swift in Sources */,
 				86944FB929B989A100201F2E /* BothausApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,6 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				86944FCA29B989A200201F2E /* BothausTests.swift in Sources */,
+				86944FE429B989F100201F2E /* AppModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +298,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				86944FD429B989A200201F2E /* BothausUITests.swift in Sources */,
+				86944FE529B989F100201F2E /* AppModel.swift in Sources */,
 				86944FD629B989A200201F2E /* BothausUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -420,6 +444,8 @@
 				DEVELOPMENT_TEAM = 3L8476246X;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "I need to hear you to understand you";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "I don't just want to listen, I want to understand";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -449,6 +475,8 @@
 				DEVELOPMENT_TEAM = 3L8476246X;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "I need to hear you to understand you";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "I don't just want to listen, I want to understand";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -583,6 +611,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		86944FEA29B98A6900201F2E /* XCRemoteSwiftPackageReference "openai-kit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dylanshine/openai-kit.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		86944FEB29B98A6900201F2E /* OpenAIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 86944FEA29B98A6900201F2E /* XCRemoteSwiftPackageReference "openai-kit" */;
+			productName = OpenAIKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 86944FAD29B989A100201F2E /* Project object */;
 }

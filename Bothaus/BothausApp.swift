@@ -9,9 +9,16 @@ import SwiftUI
 
 @main
 struct BothausApp: App {
+    @StateObject var appModel = AppModel()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(appModel)
+                .onAppear() {
+                    appModel.speakResponse(responseText: "Loaded")
+//                    appModel.voiceTest()
+                }
         }
     }
 }
