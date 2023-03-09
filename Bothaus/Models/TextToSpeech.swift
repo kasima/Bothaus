@@ -14,29 +14,33 @@ class TextToSpeech {
     }
 
     func speak(text: String, voiceIdentifier: String) {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
-            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
-        } catch {
-            print("audioSession properties weren't set because of an error.")
-        }
+        enableAVSession()
 
         let utterance = AVSpeechUtterance(string: text)
         utterance.voice = AVSpeechSynthesisVoice(identifier: voiceIdentifier)
         speechSynthesizer.speak(utterance)
 
-        disableAVSession()
+//        disableAVSession()
     }
 
     func stopSpeaking() {
         speechSynthesizer.stopSpeaking(at: .immediate)
     }
 
+    private func enableAVSession() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
+            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
+        } catch {
+            print("audioSession properties weren't set because of an error.")
+        }
+    }
+
     private func disableAVSession() {
         do {
             try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         } catch {
-            print("audioSession properties weren't disable.")
+            print("audioSession properties weren't disabled.")
         }
     }
 }

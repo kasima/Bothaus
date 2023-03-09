@@ -54,6 +54,14 @@ class SpeechRecognizer {
         return (audioEngine, request)
     }
 
+    private static func deactivateAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        } catch {
+            print("audioSession properties weren't disabled.")
+        }
+   }
+
     private var audioEngine: AVAudioEngine?
     private var request: SFSpeechAudioBufferRecognitionRequest?
     private var task: SFSpeechRecognitionTask?
@@ -144,6 +152,7 @@ class SpeechRecognizer {
         audioEngine?.stop()
         request?.endAudio()
         task?.finish()
+        Self.deactivateAudioSession()
 
         audioEngine = nil
         request = nil
