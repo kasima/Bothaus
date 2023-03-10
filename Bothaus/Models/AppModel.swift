@@ -126,9 +126,7 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
 
     private func updateMessageHistory() -> [Chat.Message] {
         let newMessage = Message(id: messages.count, role: "user", content: promptText)
-        DispatchQueue.main.async {
-            self.messages.append(newMessage)
-        }
+        self.messages.append(newMessage)
         print(messages)
         promptText = ""
         let chatMessages = messages.map { message in
@@ -146,7 +144,7 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
         DispatchQueue.main.async {
             self.chatState = .waitingForResponse
         }
-        let chatMessages = updateMessageHistory()
+        let chatMessages = self.updateMessageHistory()
         Task {
             do {
                 if let response = try await openAIAPIClient?.sendToChatGPTAPI(system: systemMessage, messages: chatMessages) {
