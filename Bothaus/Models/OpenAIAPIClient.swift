@@ -23,8 +23,14 @@ class OpenAIAPIClient {
 
     func sendToChatGPTAPI(system: String, messages: [Chat.Message]) async throws -> Chat.Message {
         if testing {
-            sleep(3)
-            return Chat.Message(role:"assistant", content: "This is a a test of the system. Once, there was a man who was constantly misplacing his keys. He would spend hours searching for them, only to realize they were in his pocket all along.")
+            sleep(1)
+            let testResponses = [
+                "This is test one. What do you call an alligator in a vest? An investigator.",
+                "This is test two. I told my wife she was drawing her eyebrows too high. She looked surprised.",
+                "This is test three. Why did the scarecrow win an award? Because he was outstanding in his field."
+            ]
+            let randomIndex = Int(arc4random_uniform(UInt32(testResponses.count)))
+            return Chat.Message(role:"assistant", content: testResponses[randomIndex])
         } else {
             let systemMessage = Chat.Message(role: "system", content: system)
             let fullMessages = [systemMessage] + messages
