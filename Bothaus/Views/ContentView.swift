@@ -13,17 +13,26 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            ChatView(messages: appModel.messages)
-                .environmentObject(appModel)
+            ZStack {
+                ChatView(messages: appModel.messages)
+                    .environmentObject(appModel)
 
-            Spacer()
+                if (appModel.chatState == .listening && appModel.promptText != "") {
+                    VStack {
+                        Spacer()
+                        Text(appModel.promptText)
+                            .font(.title)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            // .background(Color(UIColor.systemGray5).opacity(0.8))
+                            .background(.ultraThinMaterial)
+                            .foregroundColor(Color(UIColor.label))
+                    }
+                }
+            }
 
-            Text(appModel.promptText)
-               .font(.title)
-               .padding()
-
-           ChatButton(state: appModel.chatState, appModel: appModel)
-               .padding()
+            ChatButton(state: appModel.chatState, appModel: appModel)
+                .padding()
         }
     }
 }
@@ -31,8 +40,15 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let appModel = AppModel(
+            chatState: .listening,
             promptText: "This is the prompt",
             messages: [
+                Message(id: 1, role: "user", content: "Hey you"),
+                Message(id: 2, role: "assistant", content: "Who me?"),
+                Message(id: 1, role: "user", content: "Hey you"),
+                Message(id: 2, role: "assistant", content: "Who me?"),
+                Message(id: 1, role: "user", content: "Hey you"),
+                Message(id: 2, role: "assistant", content: "Who me?"),
                 Message(id: 1, role: "user", content: "Hey you"),
                 Message(id: 2, role: "assistant", content: "Who me?")
             ]

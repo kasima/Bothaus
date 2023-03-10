@@ -47,10 +47,11 @@ struct ChatButton: View {
             }
         })
         .disabled(state == .waitingForResponse)
-        .foregroundColor(.white)
         .padding(20)
+        .frame(width: 100, height: 100)
         .background(backgroundColor())
-        .cornerRadius(10)
+        .foregroundColor(.white)
+        .cornerRadius(radius())
     }
 
     func backgroundColor() -> Color {
@@ -63,6 +64,15 @@ struct ChatButton: View {
             return Color(UIColor(red: 117/255, green: 169/255, blue: 156/255, alpha: 1.0))
         default:
             return Color.blue
+        }
+    }
+
+    func radius() -> CGFloat {
+        switch state {
+        case .speaking:
+            return 10
+        default:
+            return 50
         }
     }
 }

@@ -39,10 +39,11 @@ struct ChatView: View {
             }
         }
 
-        Button("Add Message") {
-            appModel.promptText = "New Message \(messages.count)"
-            appModel.sendToChatGPTAPI()
-        }
+        // Testing button:
+        // Button("Add Message") {
+        //     appModel.promptText = "New Message \(messages.count)"
+        //     appModel.sendToChatGPTAPI()
+        // }
     }
 }
 
