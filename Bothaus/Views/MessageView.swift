@@ -23,13 +23,13 @@ struct MessageView: View {
         HStack {
             if (message.role == "user") {
                 Spacer()
-                Text("\(message.id): \(message.content)")
+                Text(message.content)
                     .modifier(MessageFormat())
                     .foregroundColor(Color.white)
                     .background(Color.blue)
                     .cornerRadius(10)
             } else {
-                Text("\(message.id): \(message.content)")
+                Text(message.content)
                     .modifier(MessageFormat())
                     .foregroundColor(Color.white)
                     .background(Color(UIColor(red: 117/255, green: 169/255, blue: 156/255, alpha: 1.0)))

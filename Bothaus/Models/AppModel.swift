@@ -24,7 +24,8 @@ struct Message {
 }
 
 final class AppModel: ObservableObject, SpeechRecognizerDelegate {
-    private let voiceIdentifier = AVSpeechSynthesisVoiceIdentifierAlex
+    private let defaultVoiceIdentifier = AVSpeechSynthesisVoiceIdentifierAlex
+    private let maxConversationHistory = 15
 
     @Published var chatState = ChatState.standby
     @Published var promptText: String
@@ -52,7 +53,7 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
     }
 
     func loaded() {
-        textToSpeech?.speak(text: "Loaded", voiceIdentifier: AVSpeechSynthesisVoiceIdentifierAlex)
+        textToSpeech?.speak(text: "Loaded", voiceIdentifier: defaultVoiceIdentifier)
     }
 
     func setupOpenAIAPIClient() -> OpenAIAPIClient? {
@@ -129,7 +130,8 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
         self.messages.append(newMessage)
         print(messages)
         promptText = ""
-        let chatMessages = messages.map { message in
+        let recentMessages = Array(messages.suffix(self.maxConversationHistory))
+        let chatMessages = recentMessages.map { message in
             return Chat.Message(role: message.role, content: message.content)
         }
         return chatMessages
@@ -167,7 +169,7 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
     // MARK: - Speech
 
     func speak(text: String) {
-        self.textToSpeech?.speak(text: self.responseText, voiceIdentifier: voiceIdentifier)
+        self.textToSpeech?.speak(text: self.responseText, voiceIdentifier: defaultVoiceIdentifier)
     }
 
     func stopSpeaking() {

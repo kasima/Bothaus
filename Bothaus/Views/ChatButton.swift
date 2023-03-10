@@ -30,19 +30,16 @@ struct ChatButton: View {
                     Image(systemName: "mic")
                         .font(.title)
                         .padding(.bottom, 1)
-//                    Text("Start Listening")
                 case .listening:
                     Image(systemName: "mic.slash")
                         .font(.title)
                         .padding(.bottom, 1)
-//                    Text("Stop Listening")
                 case .waitingForResponse:
                     ProgressView()
                 case .speaking:
                     Image(systemName: "speaker.slash")
                         .font(.title)
                         .padding(.bottom, 1)
-//                    Text("Stop Speaking")
                 }
             }
         })

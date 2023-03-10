@@ -27,10 +27,7 @@ struct ChatView: View {
                     }
                 }
                 .onChange(of: messages.count) { newCount in
-                    // print(">>> onChange detected, count: \(messages.count), \(messages.last?.id): \(messages.last?.content)")
-                    // print(">>> onChange detected, newCount: \(newCount), \(appModel.messages.last?.id)")
-
-                    // this closure holds the old state of messages, even though newCount is correct, so we need to go back to the model
+                    // This closure holds the old state of messages, even though newCount is correct, so we need to go back to the model
                     // TODO - Make messages conform to Equatable so that onChange can be used with messages instead of messages.count
                     withAnimation {
                         proxy.scrollTo(appModel.messages.last?.id, anchor: .bottom)
@@ -38,12 +35,6 @@ struct ChatView: View {
                 }
             }
         }
-
-        // Testing button:
-        // Button("Add Message") {
-        //     appModel.promptText = "New Message \(messages.count)"
-        //     appModel.sendToChatGPTAPI()
-        // }
     }
 }
 
