@@ -17,13 +17,19 @@ enum ChatState {
     case speaking
 }
 
+struct Message {
+    public var id: Int
+    public var role: String
+    public var content: String
+}
+
 final class AppModel: ObservableObject, SpeechRecognizerDelegate {
     private let voiceIdentifier = AVSpeechSynthesisVoiceIdentifierAlex
 
     @Published var chatState = ChatState.standby
-    @Published var promptText: String = ""
+    @Published var promptText: String
+    @Published var messages: [Message]
     @Published var responseText: String = ""
-    @Published var messages: [Chat.Message] = []
     @Published var systemMessage = "You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible. Limit answers to 30 seconds or less. Format answers for clarity when read by text to speech software. Do not preface responses with caveats or safety warnings."
 
     private var speechRecognizer: SpeechRecognizer?
@@ -31,8 +37,10 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
     private var speechDelegate: SpeechDelegate?
     private var textToSpeech: TextToSpeech?
 
-    init(chatState: ChatState = .standby) {
+    init(chatState: ChatState = .standby, promptText: String = "", messages: [Message] = []) {
         self.chatState = chatState
+        self.promptText = promptText
+        self.messages = messages
         setup()
     }
 
@@ -108,40 +116,42 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
     func didFailWithError(_ error: Error) {
         print(">>> AppModel: \(error)")
         self.chatState = .standby
-//        speakError(error)
-    }
 
-    func speakError(_ error: Error) {
-//        DispatchQueue.main.async {
-//            var errorMessage = ""
-//            if let error = error as? SpeechRecognizerError {
-//                errorMessage += error.message
-//            } else {
-//                errorMessage += error.localizedDescription
-//            }
-//            self.promptText = "<< \(errorMessage) >>"
-//        }
+        promptText = "test"
+        sendToChatGPTAPI()
     }
 
 
     // MARK: - ChatGPT Request
 
-    private func buildMessageHistory() {
-        let newMessage = Chat.Message(role: "user", content: promptText)
-        messages.append(newMessage)
+    private func updateMessageHistory() -> [Chat.Message] {
+        let newMessage = Message(id: messages.count, role: "user", content: promptText)
+        DispatchQueue.main.async {
+            self.messages.append(newMessage)
+        }
         print(messages)
+        promptText = ""
+        let chatMessages = messages.map { message in
+            return Chat.Message(role: message.role, content: message.content)
+        }
+        return chatMessages
+    }
+
+    private func appendResponseToMessageHistory(message: Chat.Message) {
+        let newMessage = Message(id: messages.count, role: message.role, content: message.content)
+        messages.append(newMessage)
     }
 
     func sendToChatGPTAPI() {
         DispatchQueue.main.async {
             self.chatState = .waitingForResponse
         }
-        buildMessageHistory()
+        let chatMessages = updateMessageHistory()
         Task {
             do {
-                if let response = try await openAIAPIClient?.sendToChatGPTAPI(system: systemMessage, messages: messages) {
+                if let response = try await openAIAPIClient?.sendToChatGPTAPI(system: systemMessage, messages: chatMessages) {
                     DispatchQueue.main.async {
-                        self.messages.append(response)
+                        self.appendResponseToMessageHistory(message: response)
                         self.responseText = response.content
                         self.speak(text: self.responseText)
                     }
