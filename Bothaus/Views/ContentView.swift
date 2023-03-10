@@ -24,15 +24,26 @@ struct ContentView: View {
                             .font(.title)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            // .background(Color(UIColor.systemGray5).opacity(0.8))
                             .background(.ultraThinMaterial)
                             .foregroundColor(Color(UIColor.label))
                     }
                 }
             }
 
-            ChatButton(state: appModel.chatState, appModel: appModel)
-                .padding()
+            ZStack {
+                ChatButton(state: appModel.chatState, appModel: appModel)
+                    .padding()
+
+                HStack {
+                    Spacer()
+                    Button("Clear") {
+                        appModel.clearMessages()
+                    }
+                    .font(.title2)
+                    .padding()
+                    .frame(width: (UIScreen.main.bounds.width-100) / 2)
+                }
+            }
         }
     }
 }

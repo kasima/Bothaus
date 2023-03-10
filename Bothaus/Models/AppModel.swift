@@ -84,6 +84,10 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
             self.speak(text: phrase)
         }
     }
+
+    func clearMessages() {
+        messages = []
+    }
     
     func startRecording() {
         do {
