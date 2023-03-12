@@ -121,17 +121,18 @@ class SpeechRecognizer {
     }
 
     private func recognitionHandler(result: SFSpeechRecognitionResult?, error: Error?) {
-//        let receivedFinalResult = result?.isFinal ?? false
-//        let receivedError = error != nil
-//
-//        if receivedFinalResult || receivedError {
-//            audioEngine?.stop()
-//            audioEngine?.inputNode.removeTap(onBus: 0)
-//        }
-//
-//        if let result = result {
-//            self.delegate?.didReceiveTranscription(result.bestTranscription.formattedString, isFinal: result.isFinal)
-//        }
+        // NB - code from Apple Tutorial
+        // let receivedFinalResult = result?.isFinal ?? false
+        // let receivedError = error != nil
+        //
+        // if receivedFinalResult || receivedError {
+        //     audioEngine?.stop()
+        //     audioEngine?.inputNode.removeTap(onBus: 0)
+        // }
+        //
+        // if let result = result {
+        //     self.delegate?.didReceiveTranscription(result.bestTranscription.formattedString, isFinal: result.isFinal)
+        // }
         if let error = error {
             self.stopRecording()
             audioEngine?.inputNode.removeTap(onBus: 0)

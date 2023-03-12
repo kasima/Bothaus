@@ -101,6 +101,7 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
         speechRecognizer?.stopRecording()
     }
 
+
     // MARK: - SpeechRecognizerDelegate
 
     func didStartRecording() {
@@ -119,21 +120,49 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
     }
 
     func didFailWithError(_ error: Error) {
-        print(">>> AppModel: \(error)")
+        print (">>> didFailwithError: \(error)")
         self.chatState = .standby
-
-        promptText = "test"
-        sendToChatGPTAPI()
     }
 
 
     // MARK: - ChatGPT Request
 
-    private func updateMessageHistory() -> [Chat.Message] {
+    func sendToChatGPTAPI() {
+        DispatchQueue.main.async {
+            self.chatState = .waitingForResponse
+        }
+        self.addUserMessage()
+        Task {
+            do {
+                guard let response = try await openAIAPIClient?.sendToChatGPTAPI(
+                    system: systemMessage,
+                    messages: recentMessages()
+                ) else {
+                    print("no response")
+                    self.chatState = .standby
+                    return
+                }
+                self.addAssistantMessage(message: response)
+                self.responseText = response.content
+                self.speak(text: self.responseText)
+            } catch {
+                print("chatgpt error")
+                self.chatState = .standby
+            }
+        }
+    }
+
+    private func addUserMessage() {
         let newMessage = Message(id: messages.count, role: "user", content: promptText)
         self.messages.append(newMessage)
         print(messages)
+
+        // Clear the promptText once the message shows up in history
         promptText = ""
+    }
+
+    private func recentMessages() -> [Chat.Message] {
+        // Gather only the most recent messages to send to the API for latency
         let recentMessages = Array(messages.suffix(self.maxConversationHistory))
         let chatMessages = recentMessages.map { message in
             return Chat.Message(role: message.role, content: message.content)
@@ -141,34 +170,11 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
         return chatMessages
     }
 
-    private func appendResponseToMessageHistory(message: Chat.Message) {
+    private func addAssistantMessage(message: Chat.Message) {
         let newMessage = Message(id: messages.count, role: message.role, content: message.content)
         messages.append(newMessage)
     }
 
-    func sendToChatGPTAPI() {
-        DispatchQueue.main.async {
-            self.chatState = .waitingForResponse
-        }
-        let chatMessages = self.updateMessageHistory()
-        Task {
-            do {
-                if let response = try await openAIAPIClient?.sendToChatGPTAPI(system: systemMessage, messages: chatMessages) {
-                    DispatchQueue.main.async {
-                        self.appendResponseToMessageHistory(message: response)
-                        self.responseText = response.content
-                        self.speak(text: self.responseText)
-                    }
-                } else {
-                    print("no response")
-                    self.chatState = .standby
-                }
-            } catch {
-                print("chatgpt error")
-                self.chatState = .standby
-            }
-        }
-    }
 
     // MARK: - Speech
 

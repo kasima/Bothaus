@@ -168,10 +168,10 @@
 		86944FFD29B9CE8900201F2E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				86944FF929B996CF00201F2E /* AppModel.swift */,
 				86944FED29B995F600201F2E /* SpeechRecognizer.swift */,
 				86944FF129B9962900201F2E /* OpenAIAPIClient.swift */,
 				86944FF529B9967900201F2E /* TextToSpeech.swift */,
-				86944FF929B996CF00201F2E /* AppModel.swift */,
 				86944FFE29B9D8A700201F2E /* SpeechDelegate.swift */,
 			);
 			path = Models;

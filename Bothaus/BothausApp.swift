@@ -17,7 +17,7 @@ struct BothausApp: App {
                 .environmentObject(appModel)
                 .onAppear() {
                     appModel.loaded()
-//                    appModel.voiceTest()
+                    // appModel.voiceTest()
                 }
         }
     }
