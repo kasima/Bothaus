@@ -46,7 +46,7 @@ struct ContentView: View {
                     }
                 }            }
             .sheet(isPresented: $showAddBotView) {
-                AddBotView().environment(\.managedObjectContext, viewContext)
+                BotFormView().environment(\.managedObjectContext, viewContext)
             }
             .navigationTitle("🤖 Bothaus")
         }

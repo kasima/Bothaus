@@ -14,6 +14,7 @@ struct TalkInterface: View {
     @Environment(\.presentationMode) var presentationMode
 
     @StateObject var talkModel: TalkModel
+    @State private var showEditBotView = false
 
     init(bot: Bot, talkModel: TalkModel? = nil) {
         self.bot = bot
@@ -60,11 +61,21 @@ struct TalkInterface: View {
         }
         .navigationTitle(bot.name ?? "")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarItems(trailing: Button("Edit") {
+            showEditBotView = true
+        })
+        .sheet(isPresented: $showEditBotView) {
+            BotFormView(bot: bot).environment(\.managedObjectContext, viewContext)
+        }
         .environmentObject(talkModel)
         .onAppear() {
             talkModel.loaded()
             // talkModel.voiceTest()
         }
+    }
+
+    private func editBot() {
+        
     }
 }
 

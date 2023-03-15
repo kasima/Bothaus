@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		865025AC29C179D100E11895 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865025AB29C179D100E11895 /* Persistence.swift */; };
-		865025AE29C183BD00E11895 /* AddBotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865025AD29C183BD00E11895 /* AddBotView.swift */; };
+		865025AE29C183BD00E11895 /* BotFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865025AD29C183BD00E11895 /* BotFormView.swift */; };
 		86944FB929B989A100201F2E /* BothausApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FB829B989A100201F2E /* BothausApp.swift */; };
 		86944FBB29B989A100201F2E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FBA29B989A100201F2E /* ContentView.swift */; };
 		86944FBD29B989A200201F2E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86944FBC29B989A200201F2E /* Assets.xcassets */; };
@@ -67,7 +67,7 @@
 
 /* Begin PBXFileReference section */
 		865025AB29C179D100E11895 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		865025AD29C183BD00E11895 /* AddBotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBotView.swift; sourceTree = "<group>"; };
+		865025AD29C183BD00E11895 /* BotFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotFormView.swift; sourceTree = "<group>"; };
 		86944FB529B989A100201F2E /* Bothaus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bothaus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86944FB829B989A100201F2E /* BothausApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothausApp.swift; sourceTree = "<group>"; };
 		86944FBA29B989A100201F2E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -197,7 +197,7 @@
 				8694500729BA088600201F2E /* ChatView.swift */,
 				8694500B29BA09AB00201F2E /* MessageView.swift */,
 				8694500229B9DAD100201F2E /* ChatButton.swift */,
-				865025AD29C183BD00E11895 /* AddBotView.swift */,
+				865025AD29C183BD00E11895 /* BotFormView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -351,7 +351,7 @@
 				865025AC29C179D100E11895 /* Persistence.swift in Sources */,
 				86944FBB29B989A100201F2E /* ContentView.swift in Sources */,
 				86C485E629C0C57E00D59DC9 /* TalkInterface.swift in Sources */,
-				865025AE29C183BD00E11895 /* AddBotView.swift in Sources */,
+				865025AE29C183BD00E11895 /* BotFormView.swift in Sources */,
 				86944FEE29B995F600201F2E /* SpeechRecognizer.swift in Sources */,
 				86944FB929B989A100201F2E /* BothausApp.swift in Sources */,
 				8694500329B9DAD100201F2E /* ChatButton.swift in Sources */,
