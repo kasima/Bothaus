@@ -10,19 +10,19 @@ import SwiftUI
 struct ChatButton: View {
     var state: ChatState
 
-    @EnvironmentObject var appModel: AppModel
+    @EnvironmentObject var talkModel: TalkModel
 
     var body: some View {
         Button(action: {
             switch state {
             case .standby:
-                appModel.startRecording()
+                talkModel.startRecording()
             case .listening:
-                appModel.stopRecording()
+                talkModel.stopRecording()
             case .waitingForResponse:
                 print("Should be something else in here")
             case .speaking:
-                appModel.stopSpeaking()
+                talkModel.stopSpeaking()
             }
         }, label: {
             VStack {
@@ -83,7 +83,7 @@ struct ChatButton_Previews: PreviewProvider {
             ChatButton(state: .waitingForResponse)
             ChatButton(state: .speaking)
         }
-        .environmentObject(AppModel())
+        .environmentObject(TalkModel(bot: Bot()))
         .previewLayout(.fixed(width:300, height: 100))
     }
 }

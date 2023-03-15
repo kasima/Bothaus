@@ -9,16 +9,12 @@ import SwiftUI
 
 @main
 struct BothausApp: App {
-    @StateObject var appModel = AppModel()
+    let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(appModel)
-                .onAppear() {
-                    appModel.loaded()
-                    // appModel.voiceTest()
-                }
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-// AppModel.swift
+// TalkModel.swift
 // Bothaus
 //
 // Created by kasima on 3/5/23.
@@ -23,41 +23,32 @@ struct Message {
     public var content: String
 }
 
-final class AppModel: ObservableObject, SpeechRecognizerDelegate {
+final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
     private let maxConversationHistory = 15
 
     @Published var chatState = ChatState.standby
     @Published var promptText: String
     @Published var messages: [Message]
     @Published var responseText: String = ""
+    var bot: Bot
 
     // Standard voice assistant
-    // @Published var systemMessage = "You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible. Limit answers to 30 seconds or less. Format answers for clarity when read by text to speech software. Do not preface responses with caveats or safety warnings."
-    // private let voiceLanguage = "en-US"
-    // private let defaultVoiceIdentifier = AVSpeechSynthesisVoiceIdentifierAlex
-
-    // French translator
-    // @Published var systemMessage = "You are Charles, an english to french translator. Make your answers as concise and possible. Do not make translations literal, use idiomatic French when applicable. Format reponses for clarity when read by text to speech software"
-    // private let voiceLanguage = "fr-FR"
-    // private let defaultVoiceIdentifier = "com.apple.voice.compact.fr-FR.Thomas"
-
-    // Office trivia quiz bot
-    // @Published var systemMessage = "You are a trivia quiz bot for the US television show The Office. You will ask trivia questions about the show. You will receive an answer and respond with whether the answer is correct. In the same response, you will ask the next trivia question. Format responses for clarity when read by text to speech software."
-    // private let voiceLanguage = "en-US"
-    // private let defaultVoiceIdentifier = AVSpeechSynthesisVoiceIdentifierAlex
-
-    // Haiku bot
-    @Published var systemMessage = "You are a haiku bot named Yosa. Format all answers in the form of a haiku. Format answers for clarity when read by text to speech software"
+    private let defaultSystemPrompt = "You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible. Limit answers to 30 seconds or less. Format answers for clarity when read by text to speech software. Do not preface responses with caveats or safety warnings."
     private let voiceLanguage = "en-US"
     private let defaultVoiceIdentifier = AVSpeechSynthesisVoiceIdentifierAlex
 
+    // French translator
+    // @Published var defaultSystemPrompt = "You are Charles, an english to french translator. Make your answers as concise and possible. Do not make translations literal, use idiomatic French when applicable. Format reponses for clarity when read by text to speech software"
+    // private let voiceLanguage = "fr-FR"
+    // private let defaultVoiceIdentifier = "com.apple.voice.compact.fr-FR.Thomas"
 
     private var speechRecognizer: SpeechRecognizer?
     private var openAIAPIClient: OpenAIAPIClient?
     private var speechDelegate: SpeechDelegate?
     private var textToSpeech: TextToSpeech?
 
-    init(chatState: ChatState = .standby, promptText: String = "", messages: [Message] = []) {
+    init(bot: Bot, chatState: ChatState = .standby, promptText: String = "", messages: [Message] = []) {
+        self.bot = bot
         self.chatState = chatState
         self.promptText = promptText
         self.messages = messages
@@ -67,7 +58,7 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
     func setup() {
         speechRecognizer = SpeechRecognizer(delegate: self)
         openAIAPIClient = setupOpenAIAPIClient()
-        speechDelegate = SpeechDelegate(appModel: self)
+        speechDelegate = SpeechDelegate(talkModel: self)
         textToSpeech = TextToSpeech(delegate: speechDelegate!)
     }
 
@@ -122,7 +113,9 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
     }
 
 
+    //
     // MARK: - SpeechRecognizerDelegate
+    //
 
     func didStartRecording() {
         self.chatState = .listening
@@ -145,7 +138,9 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
     }
 
 
+    //
     // MARK: - ChatGPT Request
+    //
 
     func sendToChatGPTAPI() {
         DispatchQueue.main.async {
@@ -155,7 +150,7 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
         Task {
             do {
                 guard let response = try await openAIAPIClient?.sendToChatGPTAPI(
-                    system: systemMessage,
+                    system: bot.systemPrompt ?? defaultSystemPrompt,
                     messages: recentMessages()
                 ) else {
                     print("no response")
@@ -200,7 +195,9 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
     }
 
 
+    //
     // MARK: - Speech
+    //
 
     func speak(text: String) {
         self.textToSpeech?.speak(text: self.responseText, voiceIdentifier: defaultVoiceIdentifier)
