@@ -88,7 +88,7 @@ struct PersistenceController {
 
         bot = Bot(context: context)
         bot.name = "Julia"
-        bot.systemPrompt = "You are an ingredient conversion bot. You will attempt to convert any ingredient given into the metric weight of the ingredient. Then you will make a corny joke about the ingredient wihtout any preface. Format responses for clarity when read by text to speech software."
+        bot.systemPrompt = "You are an ingredient conversion bot. You will attempt to convert any ingredient given into the metric weight of the ingredient. Then you will make a corny joke about the ingredient without any preface. Format responses for clarity when read by text to speech software."
 
         // Save the context
         do {
