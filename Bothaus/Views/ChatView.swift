@@ -9,8 +9,9 @@ import SwiftUI
 import OpenAIKit
 
 struct ChatView: View {
-    @EnvironmentObject var appModel: AppModel
     var messages: [Message]
+    
+    @EnvironmentObject var appModel: AppModel
 
     init(messages: [Message]) {
         self.messages = messages

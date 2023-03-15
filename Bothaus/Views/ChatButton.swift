@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ChatButton: View {
     var state: ChatState
-    var appModel: AppModel
+
+    @EnvironmentObject var appModel: AppModel
 
     var body: some View {
         Button(action: {
@@ -77,11 +78,12 @@ struct ChatButton: View {
 struct ChatButton_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ChatButton(state: .standby, appModel: AppModel())
-            ChatButton(state: .listening, appModel: AppModel())
-            ChatButton(state: .waitingForResponse, appModel: AppModel())
-            ChatButton(state: .speaking, appModel: AppModel())
+            ChatButton(state: .standby)
+            ChatButton(state: .listening)
+            ChatButton(state: .waitingForResponse)
+            ChatButton(state: .speaking)
         }
+        .environmentObject(AppModel())
         .previewLayout(.fixed(width:300, height: 100))
     }
 }

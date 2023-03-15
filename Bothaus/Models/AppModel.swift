@@ -24,14 +24,33 @@ struct Message {
 }
 
 final class AppModel: ObservableObject, SpeechRecognizerDelegate {
-    private let defaultVoiceIdentifier = AVSpeechSynthesisVoiceIdentifierAlex
     private let maxConversationHistory = 15
 
     @Published var chatState = ChatState.standby
     @Published var promptText: String
     @Published var messages: [Message]
     @Published var responseText: String = ""
-    @Published var systemMessage = "You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible. Limit answers to 30 seconds or less. Format answers for clarity when read by text to speech software. Do not preface responses with caveats or safety warnings."
+
+    // Standard voice assistant
+    // @Published var systemMessage = "You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible. Limit answers to 30 seconds or less. Format answers for clarity when read by text to speech software. Do not preface responses with caveats or safety warnings."
+    // private let voiceLanguage = "en-US"
+    // private let defaultVoiceIdentifier = AVSpeechSynthesisVoiceIdentifierAlex
+
+    // French translator
+    // @Published var systemMessage = "You are Charles, an english to french translator. Make your answers as concise and possible. Do not make translations literal, use idiomatic French when applicable. Format reponses for clarity when read by text to speech software"
+    // private let voiceLanguage = "fr-FR"
+    // private let defaultVoiceIdentifier = "com.apple.voice.compact.fr-FR.Thomas"
+
+    // Office trivia quiz bot
+    // @Published var systemMessage = "You are a trivia quiz bot for the US television show The Office. You will ask trivia questions about the show. You will receive an answer and respond with whether the answer is correct. In the same response, you will ask the next trivia question. Format responses for clarity when read by text to speech software."
+    // private let voiceLanguage = "en-US"
+    // private let defaultVoiceIdentifier = AVSpeechSynthesisVoiceIdentifierAlex
+
+    // Haiku bot
+    @Published var systemMessage = "You are a haiku bot named Yosa. Format all answers in the form of a haiku. Format answers for clarity when read by text to speech software"
+    private let voiceLanguage = "en-US"
+    private let defaultVoiceIdentifier = AVSpeechSynthesisVoiceIdentifierAlex
+
 
     private var speechRecognizer: SpeechRecognizer?
     private var openAIAPIClient: OpenAIAPIClient?
@@ -77,11 +96,12 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
     }
     
     func voiceTest() {
+        let allLanguages = false
         let voices = AVSpeechSynthesisVoice.speechVoices()
-        for voice in voices where voice.language == "en-US" {
+        for voice in voices where (allLanguages || voice.language == voiceLanguage) {
             print("\(voice.language) - \(voice.name) - \(voice.quality.rawValue) [\(voice.identifier)]")
             let phrase = "The voice you're now listening to is the one called \(voice.name)."
-            self.speak(text: phrase)
+            textToSpeech?.speak(text: phrase, voiceIdentifier: voice.identifier)
         }
     }
 
@@ -142,9 +162,13 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
                     self.chatState = .standby
                     return
                 }
-                self.addAssistantMessage(message: response)
-                self.responseText = response.content
-                self.speak(text: self.responseText)
+                DispatchQueue.main.async {
+                    self.addAssistantMessage(message: response)
+                    self.responseText = response.content
+                    print("chatGPT response: \(response.content)")
+                    // NB - needs to be sent to the main queue or the speech ends up one message behind :shrug:
+                    self.speak(text: self.responseText)
+                }
             } catch {
                 print("chatgpt error")
                 self.chatState = .standby

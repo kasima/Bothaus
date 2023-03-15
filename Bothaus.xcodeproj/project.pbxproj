@@ -40,6 +40,10 @@
 		8694500C29BA09AB00201F2E /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694500B29BA09AB00201F2E /* MessageView.swift */; };
 		8694500D29BA09AB00201F2E /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694500B29BA09AB00201F2E /* MessageView.swift */; };
 		8694500E29BA09AB00201F2E /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694500B29BA09AB00201F2E /* MessageView.swift */; };
+		86C485E629C0C57E00D59DC9 /* TalkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C485E529C0C57E00D59DC9 /* TalkInterface.swift */; };
+		86C485E729C0C57E00D59DC9 /* TalkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C485E529C0C57E00D59DC9 /* TalkInterface.swift */; };
+		86E80D7E29BD68C300C2BEBA /* Bothaus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 86E80D7C29BD68C300C2BEBA /* Bothaus.xcdatamodeld */; };
+		86E80D7F29BD68C300C2BEBA /* Bothaus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 86E80D7C29BD68C300C2BEBA /* Bothaus.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +83,8 @@
 		8694500229B9DAD100201F2E /* ChatButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatButton.swift; sourceTree = "<group>"; };
 		8694500729BA088600201F2E /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		8694500B29BA09AB00201F2E /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		86C485E529C0C57E00D59DC9 /* TalkInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkInterface.swift; sourceTree = "<group>"; };
+		86E80D7D29BD68C300C2BEBA /* Bothaus.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bothaus.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,11 +137,12 @@
 			isa = PBXGroup;
 			children = (
 				86944FB829B989A100201F2E /* BothausApp.swift */,
-				8694500629BA086300201F2E /* Views */,
 				86944FFD29B9CE8900201F2E /* Models */,
+				8694500629BA086300201F2E /* Views */,
 				86944FBC29B989A200201F2E /* Assets.xcassets */,
 				86944FE629B98A3200201F2E /* Secrets.plist */,
 				86944FBE29B989A200201F2E /* Preview Content */,
+				86E80D7C29BD68C300C2BEBA /* Bothaus.xcdatamodeld */,
 			);
 			path = Bothaus;
 			sourceTree = "<group>";
@@ -181,9 +188,10 @@
 			isa = PBXGroup;
 			children = (
 				86944FBA29B989A100201F2E /* ContentView.swift */,
-				8694500229B9DAD100201F2E /* ChatButton.swift */,
+				86C485E529C0C57E00D59DC9 /* TalkInterface.swift */,
 				8694500729BA088600201F2E /* ChatView.swift */,
 				8694500B29BA09AB00201F2E /* MessageView.swift */,
+				8694500229B9DAD100201F2E /* ChatButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -328,12 +336,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				86944FFF29B9D8A700201F2E /* SpeechDelegate.swift in Sources */,
+				86E80D7E29BD68C300C2BEBA /* Bothaus.xcdatamodeld in Sources */,
 				86944FFA29B996CF00201F2E /* AppModel.swift in Sources */,
 				86944FF229B9962900201F2E /* OpenAIAPIClient.swift in Sources */,
 				86944FF629B9967900201F2E /* TextToSpeech.swift in Sources */,
 				8694500C29BA09AB00201F2E /* MessageView.swift in Sources */,
 				8694500829BA088600201F2E /* ChatView.swift in Sources */,
 				86944FBB29B989A100201F2E /* ContentView.swift in Sources */,
+				86C485E629C0C57E00D59DC9 /* TalkInterface.swift in Sources */,
 				86944FEE29B995F600201F2E /* SpeechRecognizer.swift in Sources */,
 				86944FB929B989A100201F2E /* BothausApp.swift in Sources */,
 				8694500329B9DAD100201F2E /* ChatButton.swift in Sources */,
@@ -351,6 +361,7 @@
 				8694500D29BA09AB00201F2E /* MessageView.swift in Sources */,
 				8694500929BA088600201F2E /* ChatView.swift in Sources */,
 				86944FCA29B989A200201F2E /* BothausTests.swift in Sources */,
+				86E80D7F29BD68C300C2BEBA /* Bothaus.xcdatamodeld in Sources */,
 				86944FEF29B995F600201F2E /* SpeechRecognizer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -367,6 +378,7 @@
 				8694500A29BA088600201F2E /* ChatView.swift in Sources */,
 				86944FD429B989A200201F2E /* BothausUITests.swift in Sources */,
 				86944FF029B995F600201F2E /* SpeechRecognizer.swift in Sources */,
+				86C485E729C0C57E00D59DC9 /* TalkInterface.swift in Sources */,
 				86944FD629B989A200201F2E /* BothausUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -702,6 +714,19 @@
 			productName = OpenAIKit;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		86E80D7C29BD68C300C2BEBA /* Bothaus.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				86E80D7D29BD68C300C2BEBA /* Bothaus.xcdatamodel */,
+			);
+			currentVersion = 86E80D7D29BD68C300C2BEBA /* Bothaus.xcdatamodel */;
+			path = Bothaus.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 86944FAD29B989A100201F2E /* Project object */;
 }
