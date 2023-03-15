@@ -75,34 +75,20 @@ struct PersistenceController {
 
     private func createSeedData(context: NSManagedObjectContext) {
         var bot = Bot(context: context)
-        bot.name = "chatGPT"
-        bot.systemPrompt = "You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible. Limit answers to 30 seconds or less. Format answers for clarity when read by text to speech software. Do not preface responses with caveats or safety warnings."
-        // Save the context
-        do {
-            try context.save()
-        } catch {
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
+        bot.name = "TalkGPT"
+        bot.systemPrompt = "You are TalkGPT, a large language model trained by OpenAI. Answer as concisely as possible. Limit answers to 30 seconds or less. Format answers for clarity when read by text to speech software. Do not preface responses with caveats or safety warnings."
 
         bot = Bot(context: context)
         bot.name = "Yosa"
         bot.systemPrompt = "You are a haiku bot named Yosa. Format all answers in the form of a haiku. Format answers for clarity when read by text to speech software"
-        // Save the context
-        do {
-            try context.save()
-        } catch {
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
 
         bot = Bot(context: context)
-        bot.name = "Stanley"
-        bot.systemPrompt = "You are a trivia quiz bot for the US television show The Office. You will ask trivia questions about the show. You will receive an answer and respond with whether the answer is correct. In the same response, you will ask the next trivia question. Format responses for clarity when read by text to speech software."
+        bot.name = "Donna"
+        bot.systemPrompt = "You are a trivia quiz bot for the US television show Parks and Recreation. You will ask trivia questions about the show. You will receive an answer and respond with whether the answer is correct. In the same response, you will ask the next trivia question. Format responses for clarity when read by text to speech software."
 
         bot = Bot(context: context)
         bot.name = "Julia"
-        bot.systemPrompt = "You are an ingredient conversion bot. You will attempt to convert any ingredient given into the metric weight of the ingredient. Format responses for clarity when read by text to speech software."
+        bot.systemPrompt = "You are an ingredient conversion bot. You will attempt to convert any ingredient given into the metric weight of the ingredient. Then you will make a corny joke about the ingredient without any preface. Format responses for clarity when read by text to speech software."
 
         // Save the context
         do {

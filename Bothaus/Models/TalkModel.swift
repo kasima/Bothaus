@@ -30,7 +30,6 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
     @Published var promptText: String
     @Published var messages: [Message]
     @Published var responseText: String = ""
-    var bot: Bot
 
     // Standard voice assistant
     private let defaultSystemPrompt = "You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible. Limit answers to 30 seconds or less. Format answers for clarity when read by text to speech software. Do not preface responses with caveats or safety warnings."
@@ -46,6 +45,7 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
     private var openAIAPIClient: OpenAIAPIClient?
     private var speechDelegate: SpeechDelegate?
     private var textToSpeech: TextToSpeech?
+    private var bot: Bot?
 
     init(bot: Bot, chatState: ChatState = .standby, promptText: String = "", messages: [Message] = []) {
         self.bot = bot
@@ -63,7 +63,7 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
     }
 
     func loaded() {
-        textToSpeech?.speak(text: "Loaded", voiceIdentifier: defaultVoiceIdentifier)
+        textToSpeech?.speak(text: bot?.name ?? "", voiceIdentifier: defaultVoiceIdentifier)
     }
 
     func setupOpenAIAPIClient() -> OpenAIAPIClient? {
@@ -150,7 +150,7 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
         Task {
             do {
                 guard let response = try await openAIAPIClient?.sendToChatGPTAPI(
-                    system: bot.systemPrompt ?? defaultSystemPrompt,
+                    system: bot?.systemPrompt ?? defaultSystemPrompt,
                     messages: recentMessages()
                 ) else {
                     print("no response")
@@ -200,6 +200,7 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
     //
 
     func speak(text: String) {
+        guard text != "" else { return }
         self.textToSpeech?.speak(text: self.responseText, voiceIdentifier: defaultVoiceIdentifier)
     }
 

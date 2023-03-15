@@ -19,7 +19,7 @@ struct ContentView: View {
     @State private var showAddBotView = false
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 ForEach(bots) { bot in
                     NavigationLink {
@@ -44,9 +44,10 @@ struct ContentView: View {
                     }) {
                         Image(systemName: "plus")
                     }
-                }            }
+                }
+            }
             .sheet(isPresented: $showAddBotView) {
-                AddBotView().environment(\.managedObjectContext, viewContext)
+                BotFormView().environment(\.managedObjectContext, viewContext)
             }
             .navigationTitle("🤖 Bothaus")
         }

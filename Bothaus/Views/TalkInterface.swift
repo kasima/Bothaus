@@ -14,9 +14,11 @@ struct TalkInterface: View {
     @Environment(\.presentationMode) var presentationMode
 
     @StateObject var talkModel: TalkModel
+    @State private var showEditBotView = false
 
     init(bot: Bot, talkModel: TalkModel? = nil) {
         self.bot = bot
+        // if a talkModel is passed in, just take it, rather than instantiate
         if let talkModel = talkModel {
             self._talkModel = StateObject(wrappedValue: talkModel)
         } else {
@@ -58,8 +60,15 @@ struct TalkInterface: View {
             }
             .background(Color(UIColor.systemGray6))
         }
-        .navigationTitle(bot.name ?? "")
+        .navigationBarTitle(bot.name ?? "")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarItems(trailing: Button("Edit") {
+            showEditBotView = true
+        })
+        .toolbarBackground(.visible, for: .navigationBar)
+        .sheet(isPresented: $showEditBotView) {
+            BotFormView(bot: bot).environment(\.managedObjectContext, viewContext)
+        }
         .environmentObject(talkModel)
         .onAppear() {
             talkModel.loaded()
@@ -70,8 +79,11 @@ struct TalkInterface: View {
 
 struct TalkInterface_Previews: PreviewProvider {
     static var previews: some View {
+        let viewContext = PersistenceController.preview.container.viewContext
+        let bot = Bot(context: viewContext)
+
         let talkModel = TalkModel(
-            bot: Bot(),
+            bot: bot,
             chatState: .listening,
             promptText: "This is the prompt",
             messages: [
@@ -86,6 +98,6 @@ struct TalkInterface_Previews: PreviewProvider {
             ]
         )
 
-        TalkInterface(bot: Bot(), talkModel: talkModel)
+        TalkInterface(bot: bot, talkModel: talkModel)
     }
 }
