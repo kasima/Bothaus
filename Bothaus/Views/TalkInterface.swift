@@ -18,6 +18,7 @@ struct TalkInterface: View {
 
     init(bot: Bot, talkModel: TalkModel? = nil) {
         self.bot = bot
+        // if a talkModel is passed in, just take it, rather than instantiate
         if let talkModel = talkModel {
             self._talkModel = StateObject(wrappedValue: talkModel)
         } else {
@@ -73,16 +74,15 @@ struct TalkInterface: View {
             // talkModel.voiceTest()
         }
     }
-
-    private func editBot() {
-        
-    }
 }
 
 struct TalkInterface_Previews: PreviewProvider {
     static var previews: some View {
+        let viewContext = PersistenceController.preview.container.viewContext
+        let bot = Bot(context: viewContext)
+
         let talkModel = TalkModel(
-            bot: Bot(),
+            bot: bot,
             chatState: .listening,
             promptText: "This is the prompt",
             messages: [
@@ -97,6 +97,6 @@ struct TalkInterface_Previews: PreviewProvider {
             ]
         )
 
-        TalkInterface(bot: Bot(), talkModel: talkModel)
+        TalkInterface(bot: bot, talkModel: talkModel)
     }
 }
