@@ -83,8 +83,8 @@ struct PersistenceController {
         bot.systemPrompt = "You are a haiku bot named Yosa. Format all answers in the form of a haiku. Format answers for clarity when read by text to speech software"
 
         bot = Bot(context: context)
-        bot.name = "Stanley"
-        bot.systemPrompt = "You are a trivia quiz bot for the US television show The Office. You will ask trivia questions about the show. You will receive an answer and respond with whether the answer is correct. In the same response, you will ask the next trivia question. Format responses for clarity when read by text to speech software."
+        bot.name = "Donna"
+        bot.systemPrompt = "You are a trivia quiz bot for the US television show Parks and Recreation. You will ask trivia questions about the show. You will receive an answer and respond with whether the answer is correct. In the same response, you will ask the next trivia question. Format responses for clarity when read by text to speech software."
 
         bot = Bot(context: context)
         bot.name = "Julia"
