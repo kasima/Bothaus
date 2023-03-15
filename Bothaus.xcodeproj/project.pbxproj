@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		865025AC29C179D100E11895 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865025AB29C179D100E11895 /* Persistence.swift */; };
+		865025AE29C183BD00E11895 /* AddBotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865025AD29C183BD00E11895 /* AddBotView.swift */; };
 		86944FB929B989A100201F2E /* BothausApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FB829B989A100201F2E /* BothausApp.swift */; };
 		86944FBB29B989A100201F2E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FBA29B989A100201F2E /* ContentView.swift */; };
 		86944FBD29B989A200201F2E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86944FBC29B989A200201F2E /* Assets.xcassets */; };
@@ -27,9 +29,9 @@
 		86944FF629B9967900201F2E /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF529B9967900201F2E /* TextToSpeech.swift */; };
 		86944FF729B9967900201F2E /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF529B9967900201F2E /* TextToSpeech.swift */; };
 		86944FF829B9967900201F2E /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF529B9967900201F2E /* TextToSpeech.swift */; };
-		86944FFA29B996CF00201F2E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF929B996CF00201F2E /* AppModel.swift */; };
-		86944FFB29B996CF00201F2E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF929B996CF00201F2E /* AppModel.swift */; };
-		86944FFC29B996CF00201F2E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF929B996CF00201F2E /* AppModel.swift */; };
+		86944FFA29B996CF00201F2E /* TalkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF929B996CF00201F2E /* TalkModel.swift */; };
+		86944FFB29B996CF00201F2E /* TalkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF929B996CF00201F2E /* TalkModel.swift */; };
+		86944FFC29B996CF00201F2E /* TalkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF929B996CF00201F2E /* TalkModel.swift */; };
 		86944FFF29B9D8A700201F2E /* SpeechDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FFE29B9D8A700201F2E /* SpeechDelegate.swift */; };
 		8694500029B9D8A700201F2E /* SpeechDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FFE29B9D8A700201F2E /* SpeechDelegate.swift */; };
 		8694500129B9D8A700201F2E /* SpeechDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FFE29B9D8A700201F2E /* SpeechDelegate.swift */; };
@@ -64,6 +66,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		865025AB29C179D100E11895 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		865025AD29C183BD00E11895 /* AddBotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBotView.swift; sourceTree = "<group>"; };
 		86944FB529B989A100201F2E /* Bothaus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bothaus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86944FB829B989A100201F2E /* BothausApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothausApp.swift; sourceTree = "<group>"; };
 		86944FBA29B989A100201F2E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -78,7 +82,7 @@
 		86944FED29B995F600201F2E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		86944FF129B9962900201F2E /* OpenAIAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIAPIClient.swift; sourceTree = "<group>"; };
 		86944FF529B9967900201F2E /* TextToSpeech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextToSpeech.swift; sourceTree = "<group>"; };
-		86944FF929B996CF00201F2E /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		86944FF929B996CF00201F2E /* TalkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkModel.swift; sourceTree = "<group>"; };
 		86944FFE29B9D8A700201F2E /* SpeechDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechDelegate.swift; sourceTree = "<group>"; };
 		8694500229B9DAD100201F2E /* ChatButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatButton.swift; sourceTree = "<group>"; };
 		8694500729BA088600201F2E /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
@@ -139,10 +143,10 @@
 				86944FB829B989A100201F2E /* BothausApp.swift */,
 				86944FFD29B9CE8900201F2E /* Models */,
 				8694500629BA086300201F2E /* Views */,
+				86E80D7C29BD68C300C2BEBA /* Bothaus.xcdatamodeld */,
 				86944FBC29B989A200201F2E /* Assets.xcassets */,
 				86944FE629B98A3200201F2E /* Secrets.plist */,
 				86944FBE29B989A200201F2E /* Preview Content */,
-				86E80D7C29BD68C300C2BEBA /* Bothaus.xcdatamodeld */,
 			);
 			path = Bothaus;
 			sourceTree = "<group>";
@@ -175,11 +179,12 @@
 		86944FFD29B9CE8900201F2E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				86944FF929B996CF00201F2E /* AppModel.swift */,
+				86944FF929B996CF00201F2E /* TalkModel.swift */,
 				86944FED29B995F600201F2E /* SpeechRecognizer.swift */,
 				86944FF129B9962900201F2E /* OpenAIAPIClient.swift */,
 				86944FF529B9967900201F2E /* TextToSpeech.swift */,
 				86944FFE29B9D8A700201F2E /* SpeechDelegate.swift */,
+				865025AB29C179D100E11895 /* Persistence.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -192,6 +197,7 @@
 				8694500729BA088600201F2E /* ChatView.swift */,
 				8694500B29BA09AB00201F2E /* MessageView.swift */,
 				8694500229B9DAD100201F2E /* ChatButton.swift */,
+				865025AD29C183BD00E11895 /* AddBotView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -337,13 +343,15 @@
 			files = (
 				86944FFF29B9D8A700201F2E /* SpeechDelegate.swift in Sources */,
 				86E80D7E29BD68C300C2BEBA /* Bothaus.xcdatamodeld in Sources */,
-				86944FFA29B996CF00201F2E /* AppModel.swift in Sources */,
+				86944FFA29B996CF00201F2E /* TalkModel.swift in Sources */,
 				86944FF229B9962900201F2E /* OpenAIAPIClient.swift in Sources */,
 				86944FF629B9967900201F2E /* TextToSpeech.swift in Sources */,
 				8694500C29BA09AB00201F2E /* MessageView.swift in Sources */,
 				8694500829BA088600201F2E /* ChatView.swift in Sources */,
+				865025AC29C179D100E11895 /* Persistence.swift in Sources */,
 				86944FBB29B989A100201F2E /* ContentView.swift in Sources */,
 				86C485E629C0C57E00D59DC9 /* TalkInterface.swift in Sources */,
+				865025AE29C183BD00E11895 /* AddBotView.swift in Sources */,
 				86944FEE29B995F600201F2E /* SpeechRecognizer.swift in Sources */,
 				86944FB929B989A100201F2E /* BothausApp.swift in Sources */,
 				8694500329B9DAD100201F2E /* ChatButton.swift in Sources */,
@@ -356,7 +364,7 @@
 			files = (
 				8694500029B9D8A700201F2E /* SpeechDelegate.swift in Sources */,
 				86944FF329B9962A00201F2E /* OpenAIAPIClient.swift in Sources */,
-				86944FFB29B996CF00201F2E /* AppModel.swift in Sources */,
+				86944FFB29B996CF00201F2E /* TalkModel.swift in Sources */,
 				86944FF729B9967900201F2E /* TextToSpeech.swift in Sources */,
 				8694500D29BA09AB00201F2E /* MessageView.swift in Sources */,
 				8694500929BA088600201F2E /* ChatView.swift in Sources */,
@@ -371,7 +379,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8694500129B9D8A700201F2E /* SpeechDelegate.swift in Sources */,
-				86944FFC29B996CF00201F2E /* AppModel.swift in Sources */,
+				86944FFC29B996CF00201F2E /* TalkModel.swift in Sources */,
 				86944FF429B9962A00201F2E /* OpenAIAPIClient.swift in Sources */,
 				8694500E29BA09AB00201F2E /* MessageView.swift in Sources */,
 				86944FF829B9967900201F2E /* TextToSpeech.swift in Sources */,

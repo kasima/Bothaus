@@ -11,7 +11,7 @@ import OpenAIKit
 struct ChatView: View {
     var messages: [Message]
     
-    @EnvironmentObject var appModel: AppModel
+    @EnvironmentObject var talkModel: TalkModel
 
     init(messages: [Message]) {
         self.messages = messages
@@ -31,7 +31,7 @@ struct ChatView: View {
                     // This closure holds the old state of messages, even though newCount is correct, so we need to go back to the model
                     // TODO - Make messages conform to Equatable so that onChange can be used with messages instead of messages.count
                     withAnimation {
-                        proxy.scrollTo(appModel.messages.last?.id, anchor: .bottom)
+                        proxy.scrollTo(talkModel.messages.last?.id, anchor: .bottom)
                     }
                 }
             }
