@@ -42,6 +42,7 @@
 		8694500C29BA09AB00201F2E /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694500B29BA09AB00201F2E /* MessageView.swift */; };
 		8694500D29BA09AB00201F2E /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694500B29BA09AB00201F2E /* MessageView.swift */; };
 		8694500E29BA09AB00201F2E /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694500B29BA09AB00201F2E /* MessageView.swift */; };
+		86BEDC7829C2BD4300D34E9C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BEDC7729C2BD4300D34E9C /* Extensions.swift */; };
 		86C485E629C0C57E00D59DC9 /* TalkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C485E529C0C57E00D59DC9 /* TalkInterface.swift */; };
 		86C485E729C0C57E00D59DC9 /* TalkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C485E529C0C57E00D59DC9 /* TalkInterface.swift */; };
 		86E80D7E29BD68C300C2BEBA /* Bothaus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 86E80D7C29BD68C300C2BEBA /* Bothaus.xcdatamodeld */; };
@@ -87,6 +88,7 @@
 		8694500229B9DAD100201F2E /* ChatButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatButton.swift; sourceTree = "<group>"; };
 		8694500729BA088600201F2E /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		8694500B29BA09AB00201F2E /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		86BEDC7729C2BD4300D34E9C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		86C485E529C0C57E00D59DC9 /* TalkInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkInterface.swift; sourceTree = "<group>"; };
 		86E80D7D29BD68C300C2BEBA /* Bothaus.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bothaus.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -155,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				86944FBF29B989A200201F2E /* Preview Assets.xcassets */,
+				86BEDC7729C2BD4300D34E9C /* Extensions.swift */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -351,6 +354,7 @@
 				865025AC29C179D100E11895 /* Persistence.swift in Sources */,
 				86944FBB29B989A100201F2E /* ContentView.swift in Sources */,
 				86C485E629C0C57E00D59DC9 /* TalkInterface.swift in Sources */,
+				86BEDC7829C2BD4300D34E9C /* Extensions.swift in Sources */,
 				865025AE29C183BD00E11895 /* BotFormView.swift in Sources */,
 				86944FEE29B995F600201F2E /* SpeechRecognizer.swift in Sources */,
 				86944FB929B989A100201F2E /* BothausApp.swift in Sources */,

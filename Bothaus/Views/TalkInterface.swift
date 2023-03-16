@@ -62,9 +62,15 @@ struct TalkInterface: View {
         }
         .navigationBarTitle(bot.name ?? "")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(trailing: Button("Edit") {
-            showEditBotView = true
-        })
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    showEditBotView = true
+                }) {
+                    Image(systemName: "info.circle")
+                }
+            }
+        }
         .toolbarBackground(Color(UIColor.systemGray6))
         .toolbarBackground(.visible, for: .navigationBar)
         .sheet(isPresented: $showEditBotView) {
@@ -81,7 +87,7 @@ struct TalkInterface: View {
 struct TalkInterface_Previews: PreviewProvider {
     static var previews: some View {
         let viewContext = PersistenceController.preview.container.viewContext
-        let bot = Bot(context: viewContext)
+        let bot = Bot.talkGPT
 
         let talkModel = TalkModel(
             bot: bot,
@@ -99,6 +105,8 @@ struct TalkInterface_Previews: PreviewProvider {
             ]
         )
 
-        TalkInterface(bot: bot, talkModel: talkModel)
+        NavigationStack {
+            TalkInterface(bot: bot, talkModel: talkModel)
+        }
     }
 }
