@@ -86,8 +86,7 @@ struct TalkInterface: View {
 
 struct TalkInterface_Previews: PreviewProvider {
     static var previews: some View {
-        let viewContext = PersistenceController.preview.container.viewContext
-        let bot = Bot.talkGPT
+        let bot = Bot.talkGPT(context: PersistenceController.preview.container.viewContext)
 
         let talkModel = TalkModel(
             bot: bot,
