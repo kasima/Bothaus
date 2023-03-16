@@ -65,6 +65,7 @@ struct TalkInterface: View {
         .navigationBarItems(trailing: Button("Edit") {
             showEditBotView = true
         })
+        .toolbarBackground(Color(UIColor.systemGray6))
         .toolbarBackground(.visible, for: .navigationBar)
         .sheet(isPresented: $showEditBotView) {
             BotFormView(bot: bot).environment(\.managedObjectContext, viewContext)
