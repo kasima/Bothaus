@@ -62,10 +62,13 @@ class SpeechRecognizer {
         }
    }
 
+    private let silenceTime = 1.75
+
     private var audioEngine: AVAudioEngine?
     private var request: SFSpeechAudioBufferRecognitionRequest?
     private var task: SFSpeechRecognitionTask?
     private let recognizer: SFSpeechRecognizer?
+    private var recognitionTimer: Timer?
 
     private weak var delegate: SpeechRecognizerDelegate?
 
@@ -133,6 +136,7 @@ class SpeechRecognizer {
         // if let result = result {
         //     self.delegate?.didReceiveTranscription(result.bestTranscription.formattedString, isFinal: result.isFinal)
         // }
+
         if let error = error {
             self.stopRecording()
             audioEngine?.inputNode.removeTap(onBus: 0)
@@ -142,6 +146,14 @@ class SpeechRecognizer {
             print("result: \(result.bestTranscription.formattedString) \(result.isFinal ? " FINAL" : "")")
 
             self.delegate?.didReceiveTranscription(result.bestTranscription.formattedString, isFinal: result.isFinal)
+
+            // Reset and start the timer
+            self.recognitionTimer?.invalidate()
+            self.recognitionTimer = Timer.scheduledTimer(withTimeInterval: silenceTime, repeats: false) { _ in
+                self.stopRecording()
+                self.audioEngine?.inputNode.removeTap(onBus: 0)
+            }
+
             if result.isFinal {
                 self.stopRecording()
                 audioEngine?.inputNode.removeTap(onBus: 0)
