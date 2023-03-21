@@ -99,12 +99,7 @@ struct PersistenceController {
         print("Bots created: \(bot)")
 
         // Save the context
-        do {
-            try context.save()
-        } catch {
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
+        save(context)
     }
 
     private func createSeedDataForVoiceSelection(context: NSManagedObjectContext) {
@@ -115,12 +110,7 @@ struct PersistenceController {
         print("Bots created: \(bot)")
 
         // Save the context
-        do {
-            try context.save()
-        } catch {
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
+        save(context)
     }
 
     func updateAllBots<T>(attributeName: String, newValue: T, context: NSManagedObjectContext) {
@@ -136,6 +126,15 @@ struct PersistenceController {
             }
         } catch {
             print("Error updating rows: \(error)")
+        }
+    }
+
+    private func save(_ context: NSManagedObjectContext) {
+        do {
+            try context.save()
+        } catch {
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
 }
