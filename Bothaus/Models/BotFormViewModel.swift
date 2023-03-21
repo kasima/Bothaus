@@ -37,15 +37,24 @@ class BotFormViewModel: ObservableObject {
     }
 
     var availableVoices: [AVSpeechSynthesisVoice] {
-        AVSpeechSynthesisVoice.speechVoices().filter { $0.language == selectedLanguage }
+        AVSpeechSynthesisVoice.speechVoices()
+            .filter { $0.language == selectedLanguage }
+            .sorted(by: { $0.name < $1.name })
     }
 
     var languages: [String] {
         Set(AVSpeechSynthesisVoice.speechVoices().map { $0.language }).sorted()
     }
 
-    func initializeVoiceToSystemLanguage() {
-        guard bot == nil else { return }
+    func initializeForm() {
+        if let bot = bot {
+            loadDataFor(bot)
+        } else {
+            initializeVoiceToSystemLanguage()
+        }
+    }
+
+    private func initializeVoiceToSystemLanguage() {
         selectedLanguage = userLanguageCode
         if let voice = speechVoiceForLanguage(selectedLanguage) {
             print("Voice for system language: \(voice.name)")
@@ -56,17 +65,14 @@ class BotFormViewModel: ObservableObject {
         }
     }
 
-    func loadBotData() {
-        if let bot = bot {
-            print("Bot: \(bot)")
-            name = bot.name ?? ""
-            systemPrompt = bot.systemPrompt ?? ""
+    private func loadDataFor(_ bot: Bot) {
+        name = bot.name ?? ""
+        systemPrompt = bot.systemPrompt ?? ""
+
             // Need to set the selectedLanguage first or the form gets in a weird state from the onChange
-            let voiceIdentifier = bot.voiceIdentifier ?? Self.defaultVoiceIdentifier
-            selectedLanguage = languageFor(voiceIdentifier) ?? Self.defaultLanguage
-            print("Loaded bot voice: \(voiceIdentifier), \(selectedLanguage)")
-            selectedVoiceIdentifier = voiceIdentifier
-        }
+        let voiceIdentifier = bot.voiceIdentifier ?? Self.defaultVoiceIdentifier
+        selectedLanguage = languageFor(voiceIdentifier) ?? Self.defaultLanguage
+        selectedVoiceIdentifier = voiceIdentifier
     }
 
     func saveBot() {
@@ -162,6 +168,8 @@ class BotFormViewModel: ObservableObject {
     //
 
     func voiceDemo(_ voiceIdentifier: String) {
+        print("Voice demo: \(voiceIdentifier)")
+
         // NB – onChange is triggered the first time the form loads, probbaly from updatedSelectedVoice(),
         //   but don't say anything because maybe the user setting other fields. Only demo the voice
         //   if the user is setting it.

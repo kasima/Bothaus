@@ -51,7 +51,7 @@ extension Bot {
         let bot = Bot(context: context)
         bot.name = "English to French Translator"
         bot.systemPrompt = frenchTranslatorPrompt
-        bot.voiceIdentifier = "com.apple.voice.compact.fr-FR.Thomas"
+        bot.voiceIdentifier = "com.apple.ttsbundle.siri_Daniel_fr-FR_compact"
         return bot
     }
 }

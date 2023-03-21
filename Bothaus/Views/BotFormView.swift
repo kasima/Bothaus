@@ -36,7 +36,8 @@ struct BotFormView: View {
 
                     Picker("Voice", selection: $viewModel.selectedVoiceIdentifier) {
                         ForEach(viewModel.availableVoices, id: \.identifier) { voice in
-                            Text(voice.name)
+                            let name = voice.identifier.contains("siri") ? "\(voice.name)*" : voice.name
+                            Text(name)
                                 .tag(voice.identifier)
                         }
                     }
@@ -56,8 +57,7 @@ struct BotFormView: View {
                 presentationMode.wrappedValue.dismiss()
             })
             .onAppear {
-                viewModel.initializeVoiceToSystemLanguage()
-                viewModel.loadBotData()
+                viewModel.initializeForm()
             }
         }
     }
