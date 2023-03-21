@@ -63,7 +63,7 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
     }
 
     func loaded() {
-        textToSpeech?.speak(text: bot?.name ?? "", voiceIdentifier: defaultVoiceIdentifier)
+        textToSpeech?.speak(text: bot?.name ?? "", voiceIdentifier: bot?.voiceIdentifier ?? defaultVoiceIdentifier)
     }
 
     func setupOpenAIAPIClient() -> OpenAIAPIClient? {
@@ -87,7 +87,7 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
     }
     
     func voiceTest() {
-        let allLanguages = false
+        let allLanguages = true
         let voices = AVSpeechSynthesisVoice.speechVoices()
         for voice in voices where (allLanguages || voice.language == voiceLanguage) {
             print("\(voice.language) - \(voice.name) - \(voice.quality.rawValue) [\(voice.identifier)]")
@@ -201,7 +201,7 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
 
     func speak(text: String) {
         guard text != "" else { return }
-        self.textToSpeech?.speak(text: self.responseText, voiceIdentifier: defaultVoiceIdentifier)
+        self.textToSpeech?.speak(text: self.responseText, voiceIdentifier: bot?.voiceIdentifier ?? defaultVoiceIdentifier)
     }
 
     func stopSpeaking() {
