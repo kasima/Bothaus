@@ -67,7 +67,7 @@ struct TalkInterface: View {
                 Button(action: {
                     showEditBotView = true
                 }) {
-                    Image(systemName: "info.circle")
+                    Text("Edit")
                 }
             }
         }
