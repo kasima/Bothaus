@@ -9,11 +9,13 @@ import SwiftUI
 import OpenAIKit
 
 struct ChatView: View {
+    var systemPrompt: String
     var messages: [Message]
     
     @EnvironmentObject var talkModel: TalkModel
 
-    init(messages: [Message]) {
+    init(systemPrompt: String, messages: [Message]) {
+        self.systemPrompt = systemPrompt
         self.messages = messages
         UITableView.appearance().separatorStyle = .none
     }
@@ -22,6 +24,12 @@ struct ChatView: View {
         ScrollViewReader { proxy in
             ScrollView {
                 VStack {
+                    Text(systemPrompt)
+                        .font(.footnote)
+                        .padding()
+                        .foregroundColor(Color(UIColor.systemGray))
+                        .background(Color(UIColor.systemGray5))
+
                     ForEach(messages, id: \.id) { message in
                         MessageView(message: message)
                             .id(message.id)
@@ -41,12 +49,15 @@ struct ChatView: View {
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView(messages: [
-            Message(id: 1, role: "user", content: "Hey you"),
-            Message(id: 2, role: "assistant", content: "Who me?"),
-            Message(id: 3, role: "user", content: "Yeah you"),
-            Message(id: 4, role: "assistant", content: "Get into my car! Awwwwwwwww yeah. Get out of my dreams. Get into my car. Beep beep, yeah.")
-
-        ])
+        let bot = Bot.talkGPT(context: PersistenceController.preview.container.viewContext)
+        NavigationView {
+            ChatView(systemPrompt: bot.systemPrompt!,
+                     messages: [
+                        Message(id: 1, role: "user", content: "Hey you"),
+                        Message(id: 2, role: "assistant", content: "Who me?"),
+                        Message(id: 3, role: "user", content: "Yeah you"),
+                        Message(id: 4, role: "assistant", content: "Get into my car! Awwwwwwwww yeah. Get out of my dreams. Get into my car. Beep beep, yeah.")
+                     ])
+        }
     }
 }
