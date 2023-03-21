@@ -26,8 +26,10 @@ struct BotFormView: View {
                     Picker("Language", selection: $viewModel.selectedLanguage) {
                         ForEach(viewModel.languages, id: \.self) { language in
                             let locale = Locale(identifier: language)
-                            let languageName = locale.localizedString(forLanguageCode: locale.languageCode ?? "") ?? "Unknown"
-                            let countryAbbreviation = locale.localizedString(forRegionCode: locale.regionCode ?? "") ?? ""
+                            let languageName = locale.localizedString(forLanguageCode: locale.language.languageCode?.identifier ?? "") ?? "Unknown"
+                            let countryAbbreviation = locale.localizedString(forRegionCode: locale.language.region?.identifier ?? "") ?? ""
+                            // let countryAbbreviation = locale.language.region?.identifier ?? ""
+
                             Text("\(languageName) (\(countryAbbreviation))")
                                 .tag(language)
                         }
