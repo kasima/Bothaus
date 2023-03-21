@@ -45,6 +45,7 @@ class BotFormViewModel: ObservableObject {
     }
 
     func initializeVoiceToSystemLanguage() {
+        guard bot == nil else { return }
         selectedLanguage = userLanguageCode
         if let voice = speechVoiceForLanguage(selectedLanguage) {
             print("Voice for system language: \(voice.name)")
@@ -57,10 +58,14 @@ class BotFormViewModel: ObservableObject {
 
     func loadBotData() {
         if let bot = bot {
+            print("Bot: \(bot)")
             name = bot.name ?? ""
             systemPrompt = bot.systemPrompt ?? ""
-            selectedVoiceIdentifier = bot.voiceIdentifier ?? Self.defaultVoiceIdentifier
-            selectedLanguage = languageFor(selectedVoiceIdentifier) ?? Self.defaultLanguage
+            // Need to set the selectedLanguage first or the form gets in a weird state from the onChange
+            let voiceIdentifier = bot.voiceIdentifier ?? Self.defaultVoiceIdentifier
+            selectedLanguage = languageFor(voiceIdentifier) ?? Self.defaultLanguage
+            print("Loaded bot voice: \(voiceIdentifier), \(selectedLanguage)")
+            selectedVoiceIdentifier = voiceIdentifier
         }
     }
 
@@ -111,6 +116,10 @@ class BotFormViewModel: ObservableObject {
             ]
         ]
 
+        // If the selectedVoiceIdentifier matches the language code, don't update it. It was probably set
+        //   properly somewhere else. Only trigger this if there's a mismatch.
+        guard (languageCode != languageFor(selectedVoiceIdentifier)) else { return nil }
+
         let availableVoices = AVSpeechSynthesisVoice.speechVoices()
 
         // Try to find the first available default voice for the language in the dictionary
@@ -128,7 +137,7 @@ class BotFormViewModel: ObservableObject {
     }
 
     private func languageFor(_ voiceIdentifier: String) -> String? {
-        if let voice = AVSpeechSynthesisVoice.speechVoices().first(where: { $0.identifier == selectedVoiceIdentifier }) {
+        if let voice = AVSpeechSynthesisVoice.speechVoices().first(where: { $0.identifier == voiceIdentifier }) {
             return voice.language
         }
         return nil
