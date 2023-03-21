@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		865025AC29C179D100E11895 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865025AB29C179D100E11895 /* Persistence.swift */; };
 		865025AE29C183BD00E11895 /* BotFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865025AD29C183BD00E11895 /* BotFormView.swift */; };
+		867F35DC29C9791700339C95 /* BotFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867F35DB29C9791700339C95 /* BotFormViewModel.swift */; };
+		867F35DD29C9791700339C95 /* BotFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867F35DB29C9791700339C95 /* BotFormViewModel.swift */; };
 		86944FB929B989A100201F2E /* BothausApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FB829B989A100201F2E /* BothausApp.swift */; };
 		86944FBB29B989A100201F2E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FBA29B989A100201F2E /* ContentView.swift */; };
 		86944FBD29B989A200201F2E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86944FBC29B989A200201F2E /* Assets.xcassets */; };
@@ -70,6 +72,7 @@
 		865025AB29C179D100E11895 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		865025AD29C183BD00E11895 /* BotFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotFormView.swift; sourceTree = "<group>"; };
 		867B9E4829C4AF350076AC8E /* Bothaus 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Bothaus 2.xcdatamodel"; sourceTree = "<group>"; };
+		867F35DB29C9791700339C95 /* BotFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotFormViewModel.swift; sourceTree = "<group>"; };
 		86944FB529B989A100201F2E /* Bothaus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bothaus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86944FB829B989A100201F2E /* BothausApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothausApp.swift; sourceTree = "<group>"; };
 		86944FBA29B989A100201F2E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -189,6 +192,7 @@
 				86944FFE29B9D8A700201F2E /* SpeechDelegate.swift */,
 				865025AB29C179D100E11895 /* Persistence.swift */,
 				86BEDC7729C2BD4300D34E9C /* Bot+Examples.swift */,
+				867F35DB29C9791700339C95 /* BotFormViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -351,6 +355,7 @@
 				86944FF229B9962900201F2E /* OpenAIAPIClient.swift in Sources */,
 				86944FF629B9967900201F2E /* TextToSpeech.swift in Sources */,
 				8694500C29BA09AB00201F2E /* MessageView.swift in Sources */,
+				867F35DC29C9791700339C95 /* BotFormViewModel.swift in Sources */,
 				8694500829BA088600201F2E /* ChatView.swift in Sources */,
 				865025AC29C179D100E11895 /* Persistence.swift in Sources */,
 				86944FBB29B989A100201F2E /* ContentView.swift in Sources */,
@@ -371,6 +376,7 @@
 				86944FF329B9962A00201F2E /* OpenAIAPIClient.swift in Sources */,
 				86944FFB29B996CF00201F2E /* TalkModel.swift in Sources */,
 				86944FF729B9967900201F2E /* TextToSpeech.swift in Sources */,
+				867F35DD29C9791700339C95 /* BotFormViewModel.swift in Sources */,
 				8694500D29BA09AB00201F2E /* MessageView.swift in Sources */,
 				8694500929BA088600201F2E /* ChatView.swift in Sources */,
 				86944FCA29B989A200201F2E /* BothausTests.swift in Sources */,

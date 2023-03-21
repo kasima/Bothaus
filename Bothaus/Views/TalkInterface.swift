@@ -74,7 +74,7 @@ struct TalkInterface: View {
         .toolbarBackground(Color(UIColor.systemGray6))
         .toolbarBackground(.visible, for: .navigationBar)
         .sheet(isPresented: $showEditBotView) {
-            BotFormView(bot: bot).environment(\.managedObjectContext, viewContext)
+            BotFormView(bot: bot, viewContext: viewContext)
         }
         .environmentObject(talkModel)
         .onAppear() {

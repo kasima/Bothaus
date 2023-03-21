@@ -9,8 +9,10 @@ import AVFoundation
 class TextToSpeech {
     private let speechSynthesizer = AVSpeechSynthesizer()
 
-    init(delegate: AVSpeechSynthesizerDelegate) {
-        speechSynthesizer.delegate = delegate
+    init(delegate: AVSpeechSynthesizerDelegate? = nil) {
+        if delegate != nil {
+            speechSynthesizer.delegate = delegate
+        }
     }
 
     func speak(text: String, voiceIdentifier: String) {
