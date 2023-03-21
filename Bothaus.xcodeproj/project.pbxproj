@@ -69,6 +69,7 @@
 /* Begin PBXFileReference section */
 		865025AB29C179D100E11895 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		865025AD29C183BD00E11895 /* BotFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BotFormView.swift; sourceTree = "<group>"; };
+		867B9E4829C4AF350076AC8E /* Bothaus 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Bothaus 2.xcdatamodel"; sourceTree = "<group>"; };
 		86944FB529B989A100201F2E /* Bothaus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bothaus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86944FB829B989A100201F2E /* BothausApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothausApp.swift; sourceTree = "<group>"; };
 		86944FBA29B989A100201F2E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -731,9 +732,10 @@
 		86E80D7C29BD68C300C2BEBA /* Bothaus.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				867B9E4829C4AF350076AC8E /* Bothaus 2.xcdatamodel */,
 				86E80D7D29BD68C300C2BEBA /* Bothaus.xcdatamodel */,
 			);
-			currentVersion = 86E80D7D29BD68C300C2BEBA /* Bothaus.xcdatamodel */;
+			currentVersion = 867B9E4829C4AF350076AC8E /* Bothaus 2.xcdatamodel */;
 			path = Bothaus.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
