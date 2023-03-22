@@ -139,7 +139,7 @@ class SpeechRecognizer {
 
         if let error = error {
             self.stopRecording()
-            audioEngine?.inputNode.removeTap(onBus: 0)
+            self.audioEngine?.inputNode.removeTap(onBus: 0)
 
             self.delegate?.didFailWithError(error)
         } else if let result = result {
@@ -147,16 +147,25 @@ class SpeechRecognizer {
 
             self.delegate?.didReceiveTranscription(result.bestTranscription.formattedString, isFinal: result.isFinal)
 
-            // Reset and start the timer
-            self.recognitionTimer?.invalidate()
-            self.recognitionTimer = Timer.scheduledTimer(withTimeInterval: silenceTime, repeats: false) { _ in
-                self.stopRecording()
-                self.audioEngine?.inputNode.removeTap(onBus: 0)
-            }
+            self.setRecognitionTimer(isFinal: result.isFinal)
 
             if result.isFinal {
                 self.stopRecording()
-                audioEngine?.inputNode.removeTap(onBus: 0)
+                self.audioEngine?.inputNode.removeTap(onBus: 0)
+            }
+        }
+    }
+
+    func setRecognitionTimer(isFinal: Bool) {
+        // Reset and start the timer
+        self.recognitionTimer?.invalidate()
+
+        if !isFinal {
+            self.recognitionTimer = Timer.scheduledTimer(withTimeInterval: self.silenceTime, repeats: false) { _ in
+                print(">>> Silence timer fired")
+
+                self.stopRecording()
+                self.audioEngine?.inputNode.removeTap(onBus: 0)
             }
         }
     }
