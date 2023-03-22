@@ -95,6 +95,7 @@
 		86BEDC7729C2BD4300D34E9C /* Bot+Examples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bot+Examples.swift"; sourceTree = "<group>"; };
 		86C485E529C0C57E00D59DC9 /* TalkInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkInterface.swift; sourceTree = "<group>"; };
 		86E80D7D29BD68C300C2BEBA /* Bothaus.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bothaus.xcdatamodel; sourceTree = "<group>"; };
+		86EC715829CA964000C21802 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +147,7 @@
 		86944FB729B989A100201F2E /* Bothaus */ = {
 			isa = PBXGroup;
 			children = (
+				86EC715829CA964000C21802 /* Info.plist */,
 				86944FB829B989A100201F2E /* BothausApp.swift */,
 				86944FFD29B9CE8900201F2E /* Models */,
 				8694500629BA086300201F2E /* Views */,
@@ -543,6 +545,7 @@
 				DEVELOPMENT_TEAM = 3L8476246X;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Bothaus/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Bothaus;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "I need to hear you to understand you";
@@ -576,6 +579,7 @@
 				DEVELOPMENT_TEAM = 3L8476246X;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Bothaus/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Bothaus;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "I need to hear you to understand you";
