@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import Speech
 
 extension Bot {
     static let talkGPTPrompt = "You are TalkGPT, a large language model trained by OpenAI. Answer as concisely as possible. Limit answers to 30 seconds or less. Format answers for clarity when read by text to speech software. Do not preface responses with caveats or safety warnings."
@@ -14,6 +15,7 @@ extension Bot {
         let bot = Bot(context: context)
         bot.name = "TalkGPT"
         bot.systemPrompt = talkGPTPrompt
+        bot.voiceIdentifier = AVSpeechSynthesisVoiceIdentifierAlex
         return bot
     }
 
@@ -22,6 +24,7 @@ extension Bot {
         let bot = Bot(context: context)
         bot.name = "Haiku Bot"
         bot.systemPrompt = haikuBotPrompt
+        bot.voiceIdentifier = "com.apple.ttsbundle.siri_Nicky_en-US_compact"
         return bot
     }
 
@@ -30,7 +33,7 @@ extension Bot {
         let bot = Bot(context: context)
         bot.name = "Trivia Bot"
         bot.systemPrompt = triviaBotPrompt
-
+        bot.voiceIdentifier = "com.apple.ttsbundle.siri_Nicky_en-US_compact"
         return bot
     }
 
@@ -39,6 +42,16 @@ extension Bot {
         let bot = Bot(context: context)
         bot.name = "Julia"
         bot.systemPrompt = ingredientConverterPrompt
+        bot.voiceIdentifier = "com.apple.ttsbundle.siri_Nicky_en-US_compact"
+        return bot
+    }
+
+    static let frenchTranslatorPrompt = "You are an English to French translator. You will translate any input to French. Use idiomatic French rather than performing a literal transation. Respond with only the transation. No preface or trailing text. Format responses for clarity when read by text to speech software."
+    static func frenchTranslator(context: NSManagedObjectContext) -> Bot {
+        let bot = Bot(context: context)
+        bot.name = "English to French Translator"
+        bot.systemPrompt = frenchTranslatorPrompt
+        bot.voiceIdentifier = "com.apple.ttsbundle.siri_Daniel_fr-FR_compact"
         return bot
     }
 }

@@ -29,7 +29,7 @@ struct TalkInterface: View {
     var body: some View {
         VStack {
             ZStack {
-                ChatView(messages: talkModel.messages)
+                ChatView(systemPrompt: bot.systemPrompt ?? "", messages: talkModel.messages)
 
                 if (talkModel.chatState == .listening && talkModel.promptText != "") {
                     VStack {
@@ -67,14 +67,14 @@ struct TalkInterface: View {
                 Button(action: {
                     showEditBotView = true
                 }) {
-                    Image(systemName: "info.circle")
+                    Text("Edit")
                 }
             }
         }
         .toolbarBackground(Color(UIColor.systemGray6))
         .toolbarBackground(.visible, for: .navigationBar)
         .sheet(isPresented: $showEditBotView) {
-            BotFormView(bot: bot).environment(\.managedObjectContext, viewContext)
+            BotFormView(bot: bot, viewContext: viewContext)
         }
         .environmentObject(talkModel)
         .onAppear() {
@@ -91,7 +91,7 @@ struct TalkInterface_Previews: PreviewProvider {
         let talkModel = TalkModel(
             bot: bot,
             chatState: .listening,
-            promptText: "This is the prompt",
+            promptText: bot.systemPrompt!,
             messages: [
                 Message(id: 1, role: "user", content: "Hey you"),
                 Message(id: 2, role: "assistant", content: "Who me?"),

@@ -62,10 +62,13 @@ class SpeechRecognizer {
         }
    }
 
+    private let silenceTime = 1.75
+
     private var audioEngine: AVAudioEngine?
     private var request: SFSpeechAudioBufferRecognitionRequest?
     private var task: SFSpeechRecognitionTask?
     private let recognizer: SFSpeechRecognizer?
+    private var recognitionTimer: Timer?
 
     private weak var delegate: SpeechRecognizerDelegate?
 
@@ -133,18 +136,36 @@ class SpeechRecognizer {
         // if let result = result {
         //     self.delegate?.didReceiveTranscription(result.bestTranscription.formattedString, isFinal: result.isFinal)
         // }
+
         if let error = error {
             self.stopRecording()
-            audioEngine?.inputNode.removeTap(onBus: 0)
+            self.audioEngine?.inputNode.removeTap(onBus: 0)
 
             self.delegate?.didFailWithError(error)
         } else if let result = result {
             print("result: \(result.bestTranscription.formattedString) \(result.isFinal ? " FINAL" : "")")
 
             self.delegate?.didReceiveTranscription(result.bestTranscription.formattedString, isFinal: result.isFinal)
+
+            self.setRecognitionTimer(isFinal: result.isFinal)
+
             if result.isFinal {
                 self.stopRecording()
-                audioEngine?.inputNode.removeTap(onBus: 0)
+                self.audioEngine?.inputNode.removeTap(onBus: 0)
+            }
+        }
+    }
+
+    func setRecognitionTimer(isFinal: Bool) {
+        // Reset and start the timer
+        self.recognitionTimer?.invalidate()
+
+        if !isFinal {
+            self.recognitionTimer = Timer.scheduledTimer(withTimeInterval: self.silenceTime, repeats: false) { _ in
+                print(">>> Silence timer fired")
+
+                self.stopRecording()
+                self.audioEngine?.inputNode.removeTap(onBus: 0)
             }
         }
     }

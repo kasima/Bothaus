@@ -34,6 +34,11 @@ struct PersistenceController {
 
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "Bothaus")
+
+        // Enable migrations
+        container.persistentStoreDescriptions.first?.setOption(true as NSNumber, forKey: NSMigratePersistentStoresAutomaticallyOption)
+        container.persistentStoreDescriptions.first?.setOption(true as NSNumber, forKey: NSInferMappingModelAutomaticallyOption)
+
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
@@ -71,6 +76,18 @@ struct PersistenceController {
             userDefaults.set(true, forKey: "initialDataSeeded")
             userDefaults.synchronize()
         }
+
+        // NB - for testing
+        // userDefaults.removeObject(forKey: "initialDataSeededForVoiceSelection")
+
+        if !userDefaults.bool(forKey: "initialDataSeededForVoiceSelection") {
+            // Seed your initial data here
+            createSeedDataForVoiceSelection(context: context)
+
+            // Mark that the initial data has been seeded
+            userDefaults.set(true, forKey: "initialDataSeededForVoiceSelection")
+            userDefaults.synchronize()
+        }
     }
 
     private func createSeedData(context: NSManagedObjectContext) {
@@ -82,6 +99,37 @@ struct PersistenceController {
         print("Bots created: \(bot)")
 
         // Save the context
+        save(context)
+    }
+
+    private func createSeedDataForVoiceSelection(context: NSManagedObjectContext) {
+        updateAllBots(attributeName: "voiceIdentifier", newValue: "com.apple.ttsbundle.siri_Nicky_en-US_compact", context: context)
+
+        let bot = Bot.frenchTranslator(context: context)
+        // This is annoying. Silencing warnings about an unused bot variable
+        print("Bots created: \(bot)")
+
+        // Save the context
+        save(context)
+    }
+
+    func updateAllBots<T>(attributeName: String, newValue: T, context: NSManagedObjectContext) {
+        guard let entityName = Bot.entity().name else { return }
+        let request = NSBatchUpdateRequest(entityName: entityName)
+        request.propertiesToUpdate = [attributeName: newValue]
+        request.resultType = .updatedObjectsCountResultType
+
+        do {
+            let result = try context.execute(request) as? NSBatchUpdateResult
+            if let count = result?.result as? Int {
+                print("Updated \(count) rows.")
+            }
+        } catch {
+            print("Error updating rows: \(error)")
+        }
+    }
+
+    private func save(_ context: NSManagedObjectContext) {
         do {
             try context.save()
         } catch {
@@ -89,5 +137,4 @@ struct PersistenceController {
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
-
 }
