@@ -13,28 +13,28 @@ struct TalkInterface: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
 
-    @StateObject var talkModel: TalkModel
+    @StateObject var appModel: AppModel
     @State private var showEditBotView = false
 
-    init(bot: Bot, talkModel: TalkModel? = nil) {
+    init(bot: Bot, appModel: AppModel? = nil) {
         self.bot = bot
-        // if a talkModel is passed in, just take it, rather than instantiate
-        if let talkModel = talkModel {
-            self._talkModel = StateObject(wrappedValue: talkModel)
+        // if a appModel is passed in, just take it, rather than instantiate
+        if let appModel = appModel {
+            self._appModel = StateObject(wrappedValue: appModel)
         } else {
-            self._talkModel = StateObject(wrappedValue: TalkModel(bot: bot))
+            self._appModel = StateObject(wrappedValue: AppModel(bot: bot))
         }
     }
 
     var body: some View {
         VStack {
             ZStack {
-                ChatView(systemPrompt: bot.systemPrompt ?? "", messages: talkModel.messages)
+                ConversationView(systemPrompt: bot.systemPrompt ?? "", messages: appModel.messages)
 
-                if (talkModel.chatState == .listening && talkModel.promptText != "") {
+                if (appModel.chatState == .listening && appModel.promptText != "") {
                     VStack {
                         Spacer()
-                        Text(talkModel.promptText)
+                        Text(appModel.promptText)
                             .font(.title)
                             .padding()
                             .frame(maxWidth: .infinity)
@@ -45,13 +45,13 @@ struct TalkInterface: View {
             }
 
             ZStack {
-                SpeechEntryView(state: talkModel.chatState)
+                SpeechEntryView(state: appModel.chatState)
                     .padding()
 
                 HStack {
                     Spacer()
                     Button("Clear") {
-                        talkModel.clearMessages()
+                        appModel.clearMessages()
                     }
                     .font(.title2)
                     .padding()
@@ -76,10 +76,10 @@ struct TalkInterface: View {
         .sheet(isPresented: $showEditBotView) {
             BotFormView(bot: bot, viewContext: viewContext)
         }
-        .environmentObject(talkModel)
+        .environmentObject(appModel)
         .onAppear() {
-            talkModel.loaded()
-            // talkModel.voiceTest()
+            appModel.loaded()
+            // appModel.voiceTest()
         }
     }
 }
@@ -88,7 +88,7 @@ struct TalkInterface_Previews: PreviewProvider {
     static var previews: some View {
         let bot = Bot.talkGPT(context: PersistenceController.preview.container.viewContext)
 
-        let talkModel = TalkModel(
+        let appModel = AppModel(
             bot: bot,
             chatState: .listening,
             promptText: bot.systemPrompt!,
@@ -105,7 +105,7 @@ struct TalkInterface_Previews: PreviewProvider {
         )
 
         NavigationStack {
-            TalkInterface(bot: bot, talkModel: talkModel)
+            TalkInterface(bot: bot, appModel: appModel)
         }
     }
 }

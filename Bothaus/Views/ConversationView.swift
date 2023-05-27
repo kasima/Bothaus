@@ -11,7 +11,7 @@ struct ChatView: View {
     var systemPrompt: String
     var messages: [Message]
     
-    @EnvironmentObject var talkModel: TalkModel
+    @EnvironmentObject var appModel: AppModel
 
     init(systemPrompt: String, messages: [Message]) {
         self.systemPrompt = systemPrompt
@@ -38,7 +38,7 @@ struct ChatView: View {
                     // This closure holds the old state of messages, even though newCount is correct, so we need to go back to the model
                     // TODO - Make messages conform to Equatable so that onChange can be used with messages instead of messages.count
                     withAnimation {
-                        proxy.scrollTo(talkModel.messages.last?.id, anchor: .bottom)
+                        proxy.scrollTo(appModel.messages.last?.id, anchor: .bottom)
                     }
                 }
             }

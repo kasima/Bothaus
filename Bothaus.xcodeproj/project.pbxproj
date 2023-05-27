@@ -27,16 +27,16 @@
 		86944FF629B9967900201F2E /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF529B9967900201F2E /* TextToSpeech.swift */; };
 		86944FF729B9967900201F2E /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF529B9967900201F2E /* TextToSpeech.swift */; };
 		86944FF829B9967900201F2E /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF529B9967900201F2E /* TextToSpeech.swift */; };
-		86944FFA29B996CF00201F2E /* TalkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF929B996CF00201F2E /* TalkModel.swift */; };
-		86944FFB29B996CF00201F2E /* TalkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF929B996CF00201F2E /* TalkModel.swift */; };
-		86944FFC29B996CF00201F2E /* TalkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF929B996CF00201F2E /* TalkModel.swift */; };
+		86944FFA29B996CF00201F2E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF929B996CF00201F2E /* AppModel.swift */; };
+		86944FFB29B996CF00201F2E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF929B996CF00201F2E /* AppModel.swift */; };
+		86944FFC29B996CF00201F2E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF929B996CF00201F2E /* AppModel.swift */; };
 		86944FFF29B9D8A700201F2E /* SpeechDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FFE29B9D8A700201F2E /* SpeechDelegate.swift */; };
 		8694500029B9D8A700201F2E /* SpeechDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FFE29B9D8A700201F2E /* SpeechDelegate.swift */; };
 		8694500129B9D8A700201F2E /* SpeechDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FFE29B9D8A700201F2E /* SpeechDelegate.swift */; };
 		8694500329B9DAD100201F2E /* SpeechEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694500229B9DAD100201F2E /* SpeechEntryView.swift */; };
-		8694500829BA088600201F2E /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694500729BA088600201F2E /* ChatView.swift */; };
-		8694500929BA088600201F2E /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694500729BA088600201F2E /* ChatView.swift */; };
-		8694500A29BA088600201F2E /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694500729BA088600201F2E /* ChatView.swift */; };
+		8694500829BA088600201F2E /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694500729BA088600201F2E /* ConversationView.swift */; };
+		8694500929BA088600201F2E /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694500729BA088600201F2E /* ConversationView.swift */; };
+		8694500A29BA088600201F2E /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694500729BA088600201F2E /* ConversationView.swift */; };
 		8694500C29BA09AB00201F2E /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694500B29BA09AB00201F2E /* MessageView.swift */; };
 		8694500D29BA09AB00201F2E /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694500B29BA09AB00201F2E /* MessageView.swift */; };
 		8694500E29BA09AB00201F2E /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694500B29BA09AB00201F2E /* MessageView.swift */; };
@@ -51,6 +51,7 @@
 		86DB0BBB2A21AFF500289A4C /* OpenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DB0BBA2A21AFF500289A4C /* OpenAIService.swift */; };
 		86DB0BBD2A21B09400289A4C /* SecretsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DB0BBC2A21B09400289A4C /* SecretsHelper.swift */; };
 		86DB0BC02A21B2DA00289A4C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 86DB0BBF2A21B2DA00289A4C /* Alamofire */; };
+		86DB0BC22A21C3DB00289A4C /* KeyboardEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DB0BC12A21C3DB00289A4C /* KeyboardEntryView.swift */; };
 		86E80D7E29BD68C300C2BEBA /* Bothaus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 86E80D7C29BD68C300C2BEBA /* Bothaus.xcdatamodeld */; };
 		86E80D7F29BD68C300C2BEBA /* Bothaus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 86E80D7C29BD68C300C2BEBA /* Bothaus.xcdatamodeld */; };
 /* End PBXBuildFile section */
@@ -90,16 +91,17 @@
 		86944FE629B98A3200201F2E /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Secrets.plist; path = Bothaus/Secrets.plist; sourceTree = SOURCE_ROOT; };
 		86944FED29B995F600201F2E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		86944FF529B9967900201F2E /* TextToSpeech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextToSpeech.swift; sourceTree = "<group>"; };
-		86944FF929B996CF00201F2E /* TalkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkModel.swift; sourceTree = "<group>"; };
+		86944FF929B996CF00201F2E /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		86944FFE29B9D8A700201F2E /* SpeechDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechDelegate.swift; sourceTree = "<group>"; };
 		8694500229B9DAD100201F2E /* SpeechEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechEntryView.swift; sourceTree = "<group>"; };
-		8694500729BA088600201F2E /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		8694500729BA088600201F2E /* ConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationView.swift; sourceTree = "<group>"; };
 		8694500B29BA09AB00201F2E /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		86BDFE232A12709A00D8584C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		86BEDC7729C2BD4300D34E9C /* Bot+Examples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bot+Examples.swift"; sourceTree = "<group>"; };
 		86C485E529C0C57E00D59DC9 /* TalkInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkInterface.swift; sourceTree = "<group>"; };
 		86DB0BBA2A21AFF500289A4C /* OpenAIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenAIService.swift; sourceTree = "<group>"; };
 		86DB0BBC2A21B09400289A4C /* SecretsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretsHelper.swift; sourceTree = "<group>"; };
+		86DB0BC12A21C3DB00289A4C /* KeyboardEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardEntryView.swift; sourceTree = "<group>"; };
 		86E80D7D29BD68C300C2BEBA /* Bothaus.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bothaus.xcdatamodel; sourceTree = "<group>"; };
 		86EC715829CA964000C21802 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -198,7 +200,7 @@
 		86944FFD29B9CE8900201F2E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				86944FF929B996CF00201F2E /* TalkModel.swift */,
+				86944FF929B996CF00201F2E /* AppModel.swift */,
 				86DB0BBC2A21B09400289A4C /* SecretsHelper.swift */,
 				86944FED29B995F600201F2E /* SpeechRecognizer.swift */,
 				86DB0BBA2A21AFF500289A4C /* OpenAIService.swift */,
@@ -216,8 +218,9 @@
 			children = (
 				86944FBA29B989A100201F2E /* ContentView.swift */,
 				86C485E529C0C57E00D59DC9 /* TalkInterface.swift */,
-				8694500729BA088600201F2E /* ChatView.swift */,
+				8694500729BA088600201F2E /* ConversationView.swift */,
 				8694500B29BA09AB00201F2E /* MessageView.swift */,
+				86DB0BC12A21C3DB00289A4C /* KeyboardEntryView.swift */,
 				8694500229B9DAD100201F2E /* SpeechEntryView.swift */,
 				865025AD29C183BD00E11895 /* BotFormView.swift */,
 			);
@@ -372,11 +375,12 @@
 				86944FFF29B9D8A700201F2E /* SpeechDelegate.swift in Sources */,
 				86DB0BBB2A21AFF500289A4C /* OpenAIService.swift in Sources */,
 				86E80D7E29BD68C300C2BEBA /* Bothaus.xcdatamodeld in Sources */,
-				86944FFA29B996CF00201F2E /* TalkModel.swift in Sources */,
+				86944FFA29B996CF00201F2E /* AppModel.swift in Sources */,
 				86944FF629B9967900201F2E /* TextToSpeech.swift in Sources */,
 				8694500C29BA09AB00201F2E /* MessageView.swift in Sources */,
+				86DB0BC22A21C3DB00289A4C /* KeyboardEntryView.swift in Sources */,
 				867F35DC29C9791700339C95 /* BotFormViewModel.swift in Sources */,
-				8694500829BA088600201F2E /* ChatView.swift in Sources */,
+				8694500829BA088600201F2E /* ConversationView.swift in Sources */,
 				865025AC29C179D100E11895 /* Persistence.swift in Sources */,
 				86944FBB29B989A100201F2E /* ContentView.swift in Sources */,
 				86C485E629C0C57E00D59DC9 /* TalkInterface.swift in Sources */,
@@ -394,11 +398,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8694500029B9D8A700201F2E /* SpeechDelegate.swift in Sources */,
-				86944FFB29B996CF00201F2E /* TalkModel.swift in Sources */,
+				86944FFB29B996CF00201F2E /* AppModel.swift in Sources */,
 				86944FF729B9967900201F2E /* TextToSpeech.swift in Sources */,
 				867F35DD29C9791700339C95 /* BotFormViewModel.swift in Sources */,
 				8694500D29BA09AB00201F2E /* MessageView.swift in Sources */,
-				8694500929BA088600201F2E /* ChatView.swift in Sources */,
+				8694500929BA088600201F2E /* ConversationView.swift in Sources */,
 				86944FCA29B989A200201F2E /* BothausTests.swift in Sources */,
 				86E80D7F29BD68C300C2BEBA /* Bothaus.xcdatamodeld in Sources */,
 				86944FEF29B995F600201F2E /* SpeechRecognizer.swift in Sources */,
@@ -410,10 +414,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8694500129B9D8A700201F2E /* SpeechDelegate.swift in Sources */,
-				86944FFC29B996CF00201F2E /* TalkModel.swift in Sources */,
+				86944FFC29B996CF00201F2E /* AppModel.swift in Sources */,
 				8694500E29BA09AB00201F2E /* MessageView.swift in Sources */,
 				86944FF829B9967900201F2E /* TextToSpeech.swift in Sources */,
-				8694500A29BA088600201F2E /* ChatView.swift in Sources */,
+				8694500A29BA088600201F2E /* ConversationView.swift in Sources */,
 				86944FD429B989A200201F2E /* BothausUITests.swift in Sources */,
 				86944FF029B995F600201F2E /* SpeechRecognizer.swift in Sources */,
 				86C485E729C0C57E00D59DC9 /* TalkInterface.swift in Sources */,

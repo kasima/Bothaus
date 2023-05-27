@@ -1,5 +1,5 @@
 //
-// TalkModel.swift
+// AppModel.swift
 // Bothaus
 //
 // Created by kasima on 3/5/23.
@@ -22,7 +22,7 @@ struct Message {
     public var content: String
 }
 
-final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
+final class AppModel: ObservableObject, SpeechRecognizerDelegate {
     private let maxConversationHistory = 5
 
     @Published var chatState = ChatState.standby
@@ -56,7 +56,7 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
 
     func setup() {
         speechRecognizer = SpeechRecognizer(delegate: self)
-        speechDelegate = SpeechDelegate(talkModel: self)
+        speechDelegate = SpeechDelegate(appModel: self)
         textToSpeech = TextToSpeech(delegate: speechDelegate!)
     }
 
