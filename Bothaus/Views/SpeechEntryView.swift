@@ -1,5 +1,5 @@
 //
-//  ChatButton.swift
+//  SpeechEntryView.swift
 //  Bothaus
 //
 //  Created by kasima on 3/9/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ChatButton: View {
+struct SpeechEntryView: View {
     var state: ChatState
 
     @EnvironmentObject var talkModel: TalkModel
@@ -75,13 +75,13 @@ struct ChatButton: View {
     }
 }
 
-struct ChatButton_Previews: PreviewProvider {
+struct SpeechEntryView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ChatButton(state: .standby)
-            ChatButton(state: .listening)
-            ChatButton(state: .waitingForResponse)
-            ChatButton(state: .speaking)
+            SpeechEntryView(state: .standby)
+            SpeechEntryView(state: .listening)
+            SpeechEntryView(state: .waitingForResponse)
+            SpeechEntryView(state: .speaking)
         }
         .environmentObject(TalkModel(bot: Bot()))
         .previewLayout(.fixed(width:300, height: 100))

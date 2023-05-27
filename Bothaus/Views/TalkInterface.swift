@@ -45,7 +45,7 @@ struct TalkInterface: View {
             }
 
             ZStack {
-                ChatButton(state: talkModel.chatState)
+                SpeechEntryView(state: talkModel.chatState)
                     .padding()
 
                 HStack {
