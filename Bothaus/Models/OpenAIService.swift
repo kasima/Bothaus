@@ -68,6 +68,7 @@ class OpenAIService {
         } else {
             let systemMessage = ChatMessage(role: "system", content: system)
             let fullMessages = [systemMessage] + messages
+            debugPrint("Full messages: ", fullMessages)
             return try await chat(model: model, messages: fullMessages)
         }
     }

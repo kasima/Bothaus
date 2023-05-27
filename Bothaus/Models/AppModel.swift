@@ -90,6 +90,11 @@ final class AppModel: ObservableObject, SpeechRecognizerDelegate {
         speechRecognizer?.stopRecording()
     }
 
+    func generateChatResponse(from messageText: String) {
+        promptText = messageText
+        sendToChatGPTAPI()
+    }
+
 
     //
     // MARK: - SpeechRecognizerDelegate

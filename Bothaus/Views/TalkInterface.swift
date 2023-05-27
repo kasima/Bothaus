@@ -15,6 +15,7 @@ struct TalkInterface: View {
 
     @StateObject var appModel: AppModel
     @State private var showEditBotView = false
+    @AppStorage("keyboardEntry") private var keyboardEntry: Bool = false
 
     init(bot: Bot, appModel: AppModel? = nil) {
         self.bot = bot
@@ -44,21 +45,11 @@ struct TalkInterface: View {
                 }
             }
 
-            ZStack {
-                SpeechEntryView(state: appModel.chatState)
-                    .padding()
-
-                HStack {
-                    Spacer()
-                    Button("Clear") {
-                        appModel.clearMessages()
-                    }
-                    .font(.title2)
-                    .padding()
-                    .frame(width: (UIScreen.main.bounds.width-100) / 2)
-                }
+            if keyboardEntry {
+                KeyboardEntryView(keyboardEntry: $keyboardEntry)
+            } else {
+                SpeechEntryView(keyboardEntry: $keyboardEntry)
             }
-            .background(Color(UIColor.systemGray6))
         }
         .navigationBarTitle(bot.name ?? "")
         .navigationBarTitleDisplayMode(.inline)
