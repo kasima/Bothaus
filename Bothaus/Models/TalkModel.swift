@@ -23,7 +23,7 @@ struct Message {
 }
 
 final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
-    private let maxConversationHistory = 15
+    private let maxConversationHistory = 5
 
     @Published var chatState = ChatState.standby
     @Published var promptText: String
