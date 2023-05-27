@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import OpenAIKit
 
 struct MessageFormat: ViewModifier {
     func body(content: Content) -> some View {

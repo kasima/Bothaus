@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import OpenAIKit
 
 struct ChatView: View {
     var systemPrompt: String

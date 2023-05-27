@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 import Speech
-import OpenAIKit
 
 enum ChatState {
     case standby
@@ -42,7 +41,7 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
     // private let defaultVoiceIdentifier = "com.apple.voice.compact.fr-FR.Thomas"
 
     private var speechRecognizer: SpeechRecognizer?
-    private var openAIAPIClient: OpenAIAPIClient?
+    private var openAIService = OpenAIService()
     private var speechDelegate: SpeechDelegate?
     private var textToSpeech: TextToSpeech?
     private var bot: Bot?
@@ -57,33 +56,12 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
 
     func setup() {
         speechRecognizer = SpeechRecognizer(delegate: self)
-        openAIAPIClient = setupOpenAIAPIClient()
         speechDelegate = SpeechDelegate(talkModel: self)
         textToSpeech = TextToSpeech(delegate: speechDelegate!)
     }
 
     func loaded() {
         textToSpeech?.speak(text: bot?.name ?? "", voiceIdentifier: bot?.voiceIdentifier ?? defaultVoiceIdentifier)
-    }
-
-    func setupOpenAIAPIClient() -> OpenAIAPIClient? {
-        var apiKey = ""
-        var organization = ""
-        let url = Bundle.main.url(forResource: "Secrets", withExtension: "plist")
-        if let path = url?.path, let data = FileManager.default.contents(atPath: path) {
-            do {
-                let plist = try PropertyListSerialization.propertyList(from: data, format: nil)
-                guard let secrets = plist as? [String: String] else {
-                    return nil
-                }
-                apiKey = secrets["openai-api-key"]!
-                organization = secrets["openai-organization"]!
-            } catch {
-                print("Error reading regions plist file: \(error)")
-                return nil
-            }
-        }
-        return OpenAIAPIClient(apiKey: apiKey, organization: organization)
     }
     
     func voiceTest() {
@@ -149,14 +127,10 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
         self.addUserMessage()
         Task {
             do {
-                guard let response = try await openAIAPIClient?.sendToChatGPTAPI(
+                let response = try await openAIService.generateNextAssistantMessage(
                     system: bot?.systemPrompt ?? defaultSystemPrompt,
                     messages: recentMessages()
-                ) else {
-                    print("no response")
-                    self.chatState = .standby
-                    return
-                }
+                )
                 DispatchQueue.main.async {
                     self.addAssistantMessage(message: response)
                     self.responseText = response.content
@@ -180,16 +154,16 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
         promptText = ""
     }
 
-    private func recentMessages() -> [Chat.Message] {
+    private func recentMessages() -> [ChatMessage] {
         // Gather only the most recent messages to send to the API for latency
         let recentMessages = Array(messages.suffix(self.maxConversationHistory))
         let chatMessages = recentMessages.map { message in
-            return Chat.Message(role: message.role, content: message.content)
+            return ChatMessage(role: message.role, content: message.content)
         }
         return chatMessages
     }
 
-    private func addAssistantMessage(message: Chat.Message) {
+    private func addAssistantMessage(message: ChatMessage) {
         let newMessage = Message(id: messages.count, role: message.role, content: message.content)
         messages.append(newMessage)
     }

@@ -24,9 +24,6 @@
 		86944FEE29B995F600201F2E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FED29B995F600201F2E /* SpeechRecognizer.swift */; };
 		86944FEF29B995F600201F2E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FED29B995F600201F2E /* SpeechRecognizer.swift */; };
 		86944FF029B995F600201F2E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FED29B995F600201F2E /* SpeechRecognizer.swift */; };
-		86944FF229B9962900201F2E /* OpenAIAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF129B9962900201F2E /* OpenAIAPIClient.swift */; };
-		86944FF329B9962A00201F2E /* OpenAIAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF129B9962900201F2E /* OpenAIAPIClient.swift */; };
-		86944FF429B9962A00201F2E /* OpenAIAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF129B9962900201F2E /* OpenAIAPIClient.swift */; };
 		86944FF629B9967900201F2E /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF529B9967900201F2E /* TextToSpeech.swift */; };
 		86944FF729B9967900201F2E /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF529B9967900201F2E /* TextToSpeech.swift */; };
 		86944FF829B9967900201F2E /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FF529B9967900201F2E /* TextToSpeech.swift */; };
@@ -92,7 +89,6 @@
 		86944FD529B989A200201F2E /* BothausUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BothausUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		86944FE629B98A3200201F2E /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Secrets.plist; path = Bothaus/Secrets.plist; sourceTree = SOURCE_ROOT; };
 		86944FED29B995F600201F2E /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
-		86944FF129B9962900201F2E /* OpenAIAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIAPIClient.swift; sourceTree = "<group>"; };
 		86944FF529B9967900201F2E /* TextToSpeech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextToSpeech.swift; sourceTree = "<group>"; };
 		86944FF929B996CF00201F2E /* TalkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkModel.swift; sourceTree = "<group>"; };
 		86944FFE29B9D8A700201F2E /* SpeechDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechDelegate.swift; sourceTree = "<group>"; };
@@ -206,7 +202,6 @@
 				86DB0BBC2A21B09400289A4C /* SecretsHelper.swift */,
 				86944FED29B995F600201F2E /* SpeechRecognizer.swift */,
 				86DB0BBA2A21AFF500289A4C /* OpenAIService.swift */,
-				86944FF129B9962900201F2E /* OpenAIAPIClient.swift */,
 				86944FF529B9967900201F2E /* TextToSpeech.swift */,
 				86944FFE29B9D8A700201F2E /* SpeechDelegate.swift */,
 				865025AB29C179D100E11895 /* Persistence.swift */,
@@ -378,7 +373,6 @@
 				86DB0BBB2A21AFF500289A4C /* OpenAIService.swift in Sources */,
 				86E80D7E29BD68C300C2BEBA /* Bothaus.xcdatamodeld in Sources */,
 				86944FFA29B996CF00201F2E /* TalkModel.swift in Sources */,
-				86944FF229B9962900201F2E /* OpenAIAPIClient.swift in Sources */,
 				86944FF629B9967900201F2E /* TextToSpeech.swift in Sources */,
 				8694500C29BA09AB00201F2E /* MessageView.swift in Sources */,
 				867F35DC29C9791700339C95 /* BotFormViewModel.swift in Sources */,
@@ -400,7 +394,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8694500029B9D8A700201F2E /* SpeechDelegate.swift in Sources */,
-				86944FF329B9962A00201F2E /* OpenAIAPIClient.swift in Sources */,
 				86944FFB29B996CF00201F2E /* TalkModel.swift in Sources */,
 				86944FF729B9967900201F2E /* TextToSpeech.swift in Sources */,
 				867F35DD29C9791700339C95 /* BotFormViewModel.swift in Sources */,
@@ -418,7 +411,6 @@
 			files = (
 				8694500129B9D8A700201F2E /* SpeechDelegate.swift in Sources */,
 				86944FFC29B996CF00201F2E /* TalkModel.swift in Sources */,
-				86944FF429B9962A00201F2E /* OpenAIAPIClient.swift in Sources */,
 				8694500E29BA09AB00201F2E /* MessageView.swift in Sources */,
 				86944FF829B9967900201F2E /* TextToSpeech.swift in Sources */,
 				8694500A29BA088600201F2E /* ChatView.swift in Sources */,
