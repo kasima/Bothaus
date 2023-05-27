@@ -21,7 +21,6 @@
 		86944FE729B98A3200201F2E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86944FE629B98A3200201F2E /* Secrets.plist */; };
 		86944FE829B98A3200201F2E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86944FE629B98A3200201F2E /* Secrets.plist */; };
 		86944FE929B98A3200201F2E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86944FE629B98A3200201F2E /* Secrets.plist */; };
-		86944FEC29B98A6900201F2E /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 86944FEB29B98A6900201F2E /* OpenAIKit */; };
 		86944FEE29B995F600201F2E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FED29B995F600201F2E /* SpeechRecognizer.swift */; };
 		86944FEF29B995F600201F2E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FED29B995F600201F2E /* SpeechRecognizer.swift */; };
 		86944FF029B995F600201F2E /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86944FED29B995F600201F2E /* SpeechRecognizer.swift */; };
@@ -52,6 +51,9 @@
 		86BEDC7829C2BD4300D34E9C /* Bot+Examples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BEDC7729C2BD4300D34E9C /* Bot+Examples.swift */; };
 		86C485E629C0C57E00D59DC9 /* TalkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C485E529C0C57E00D59DC9 /* TalkInterface.swift */; };
 		86C485E729C0C57E00D59DC9 /* TalkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C485E529C0C57E00D59DC9 /* TalkInterface.swift */; };
+		86DB0BBB2A21AFF500289A4C /* OpenAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DB0BBA2A21AFF500289A4C /* OpenAIService.swift */; };
+		86DB0BBD2A21B09400289A4C /* SecretsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DB0BBC2A21B09400289A4C /* SecretsHelper.swift */; };
+		86DB0BC02A21B2DA00289A4C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 86DB0BBF2A21B2DA00289A4C /* Alamofire */; };
 		86E80D7E29BD68C300C2BEBA /* Bothaus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 86E80D7C29BD68C300C2BEBA /* Bothaus.xcdatamodeld */; };
 		86E80D7F29BD68C300C2BEBA /* Bothaus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 86E80D7C29BD68C300C2BEBA /* Bothaus.xcdatamodeld */; };
 /* End PBXBuildFile section */
@@ -100,6 +102,8 @@
 		86BDFE232A12709A00D8584C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		86BEDC7729C2BD4300D34E9C /* Bot+Examples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bot+Examples.swift"; sourceTree = "<group>"; };
 		86C485E529C0C57E00D59DC9 /* TalkInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkInterface.swift; sourceTree = "<group>"; };
+		86DB0BBA2A21AFF500289A4C /* OpenAIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenAIService.swift; sourceTree = "<group>"; };
+		86DB0BBC2A21B09400289A4C /* SecretsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretsHelper.swift; sourceTree = "<group>"; };
 		86E80D7D29BD68C300C2BEBA /* Bothaus.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bothaus.xcdatamodel; sourceTree = "<group>"; };
 		86EC715829CA964000C21802 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,11 +113,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86DB0BC02A21B2DA00289A4C /* Alamofire in Frameworks */,
 				86BDFE292A1270DA00D8584C /* FirebaseAnalyticsSwift in Frameworks */,
 				86BDFE2B2A1270DA00D8584C /* FirebaseCrashlytics in Frameworks */,
 				86BDFE2D2A1270DA00D8584C /* FirebasePerformance in Frameworks */,
 				86BDFE272A1270DA00D8584C /* FirebaseAnalytics in Frameworks */,
-				86944FEC29B98A6900201F2E /* OpenAIKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,7 +203,9 @@
 			isa = PBXGroup;
 			children = (
 				86944FF929B996CF00201F2E /* TalkModel.swift */,
+				86DB0BBC2A21B09400289A4C /* SecretsHelper.swift */,
 				86944FED29B995F600201F2E /* SpeechRecognizer.swift */,
+				86DB0BBA2A21AFF500289A4C /* OpenAIService.swift */,
 				86944FF129B9962900201F2E /* OpenAIAPIClient.swift */,
 				86944FF529B9967900201F2E /* TextToSpeech.swift */,
 				86944FFE29B9D8A700201F2E /* SpeechDelegate.swift */,
@@ -240,11 +246,11 @@
 			);
 			name = Bothaus;
 			packageProductDependencies = (
-				86944FEB29B98A6900201F2E /* OpenAIKit */,
 				86BDFE262A1270DA00D8584C /* FirebaseAnalytics */,
 				86BDFE282A1270DA00D8584C /* FirebaseAnalyticsSwift */,
 				86BDFE2A2A1270DA00D8584C /* FirebaseCrashlytics */,
 				86BDFE2C2A1270DA00D8584C /* FirebasePerformance */,
+				86DB0BBF2A21B2DA00289A4C /* Alamofire */,
 			);
 			productName = Bothaus;
 			productReference = 86944FB529B989A100201F2E /* Bothaus.app */;
@@ -319,8 +325,8 @@
 			);
 			mainGroup = 86944FAC29B989A100201F2E;
 			packageReferences = (
-				86944FEA29B98A6900201F2E /* XCRemoteSwiftPackageReference "openai-kit" */,
 				86BDFE252A1270DA00D8584C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				86DB0BBE2A21B2DA00289A4C /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 86944FB629B989A100201F2E /* Products */;
 			projectDirPath = "";
@@ -369,6 +375,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				86944FFF29B9D8A700201F2E /* SpeechDelegate.swift in Sources */,
+				86DB0BBB2A21AFF500289A4C /* OpenAIService.swift in Sources */,
 				86E80D7E29BD68C300C2BEBA /* Bothaus.xcdatamodeld in Sources */,
 				86944FFA29B996CF00201F2E /* TalkModel.swift in Sources */,
 				86944FF229B9962900201F2E /* OpenAIAPIClient.swift in Sources */,
@@ -380,6 +387,7 @@
 				86944FBB29B989A100201F2E /* ContentView.swift in Sources */,
 				86C485E629C0C57E00D59DC9 /* TalkInterface.swift in Sources */,
 				86BEDC7829C2BD4300D34E9C /* Bot+Examples.swift in Sources */,
+				86DB0BBD2A21B09400289A4C /* SecretsHelper.swift in Sources */,
 				865025AE29C183BD00E11895 /* BotFormView.swift in Sources */,
 				86944FEE29B995F600201F2E /* SpeechRecognizer.swift in Sources */,
 				86944FB929B989A100201F2E /* BothausApp.swift in Sources */,
@@ -737,14 +745,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		86944FEA29B98A6900201F2E /* XCRemoteSwiftPackageReference "openai-kit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/dylanshine/openai-kit.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		86BDFE252A1270DA00D8584C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -753,14 +753,17 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		86DB0BBE2A21B2DA00289A4C /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		86944FEB29B98A6900201F2E /* OpenAIKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 86944FEA29B98A6900201F2E /* XCRemoteSwiftPackageReference "openai-kit" */;
-			productName = OpenAIKit;
-		};
 		86BDFE262A1270DA00D8584C /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 86BDFE252A1270DA00D8584C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -780,6 +783,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 86BDFE252A1270DA00D8584C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebasePerformance;
+		};
+		86DB0BBF2A21B2DA00289A4C /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 86DB0BBE2A21B2DA00289A4C /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 
