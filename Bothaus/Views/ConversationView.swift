@@ -1,5 +1,5 @@
 //
-//  ChatView.swift
+//  ConversationView.swift
 //  Bothaus
 //
 //  Created by kasima on 3/9/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ChatView: View {
+struct ConversationView: View {
     var systemPrompt: String
     var messages: [Message]
     
@@ -46,11 +46,11 @@ struct ChatView: View {
     }
 }
 
-struct ChatView_Previews: PreviewProvider {
+struct ConversationView_Previews: PreviewProvider {
     static var previews: some View {
         let bot = Bot.talkGPT(context: PersistenceController.preview.container.viewContext)
         NavigationView {
-            ChatView(systemPrompt: bot.systemPrompt!,
+            ConversationView(systemPrompt: bot.systemPrompt!,
                      messages: [
                         Message(id: 1, role: "user", content: "Hey you"),
                         Message(id: 2, role: "assistant", content: "Who me?"),
