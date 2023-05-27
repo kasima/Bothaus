@@ -61,7 +61,8 @@ final class ChatModel: ObservableObject, SpeechRecognizerDelegate {
     }
 
     func loaded() {
-        textToSpeech?.speak(text: bot?.name ?? "", voiceIdentifier: bot?.voiceIdentifier ?? defaultVoiceIdentifier)
+        // Say the bot name
+        // textToSpeech?.speak(text: bot?.name ?? "", voiceIdentifier: bot?.voiceIdentifier ?? defaultVoiceIdentifier)
     }
     
     func voiceTest() {
@@ -140,8 +141,14 @@ final class ChatModel: ObservableObject, SpeechRecognizerDelegate {
                     self.addAssistantMessage(message: response)
                     self.responseText = response.content
                     print("chatGPT response: \(response.content)")
-                    // NB - needs to be sent to the main queue or the speech ends up one message behind :shrug:
-                    self.speak(text: self.responseText)
+
+                    // Only speak if we're in keyboard entry mode
+                    if UserDefaults.standard.bool(forKey: "keyboardEntry") {
+                        self.chatState = .standby
+                    } else {
+                        // NB - needs to be sent to the main queue or the speech ends up one message behind :shrug:
+                        self.speak(text: self.responseText)
+                    }
                 }
             } catch {
                 print("chatgpt error")
