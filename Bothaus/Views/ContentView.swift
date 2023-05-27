@@ -23,7 +23,7 @@ struct ContentView: View {
             List {
                 ForEach(bots) { bot in
                     NavigationLink {
-                        TalkInterface(bot: bot)
+                        ChatInterface(bot: bot)
                     } label: {
                         VStack(alignment: .leading) {
                             Text(bot.name ?? "")

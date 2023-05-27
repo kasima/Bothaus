@@ -9,17 +9,17 @@ import Foundation
 import Speech
 
 class SpeechDelegate: NSObject, AVSpeechSynthesizerDelegate {
-    let appModel: AppModel
+    let chatModel: ChatModel
 
-    init(appModel: AppModel) {
-        self.appModel = appModel
+    init(chatModel: ChatModel) {
+        self.chatModel = chatModel
     }
 
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
-        appModel.didStartSpeech()
+        chatModel.didStartSpeech()
     }
 
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        appModel.didStopSpeech()
+        chatModel.didStopSpeech()
     }
 }

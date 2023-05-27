@@ -10,19 +10,19 @@ import SwiftUI
 struct MicButton: View {
     var state: ChatState
 
-    @EnvironmentObject var appModel: AppModel
+    @EnvironmentObject var chatModel: ChatModel
 
     var body: some View {
         Button(action: {
             switch state {
             case .standby:
-                appModel.startRecording()
+                chatModel.startRecording()
             case .listening:
-                appModel.stopRecording()
+                chatModel.stopRecording()
             case .waitingForResponse:
                 print("Should be something else in here")
             case .speaking:
-                appModel.stopSpeaking()
+                chatModel.stopSpeaking()
             }
         }, label: {
             VStack {
@@ -83,7 +83,7 @@ struct MicButton_Previews: PreviewProvider {
             MicButton(state: .waitingForResponse)
             MicButton(state: .speaking)
         }
-        .environmentObject(AppModel(bot: Bot()))
+        .environmentObject(ChatModel(bot: Bot()))
         .previewLayout(.fixed(width:300, height: 100))
     }
 }

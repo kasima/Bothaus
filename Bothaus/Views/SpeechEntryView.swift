@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct SpeechEntryView: View {
-    @EnvironmentObject var appModel: AppModel
+    @EnvironmentObject var chatModel: ChatModel
     @Binding var keyboardEntry: Bool
 
     var body: some View {
         ZStack {
             HStack {
                 Button("Clear") {
-                    appModel.clearMessages()
+                    chatModel.clearMessages()
                 }
                 .font(.title2)
                 .padding()
@@ -24,7 +24,7 @@ struct SpeechEntryView: View {
                 Spacer()
             }
 
-            MicButton(state: appModel.chatState)
+            MicButton(state: chatModel.chatState)
                 .padding()
 
             HStack {
@@ -50,6 +50,6 @@ struct SpeechEntryView_Previews: PreviewProvider {
 
     static var previews: some View {
         SpeechEntryView(keyboardEntry: $keyboardEntry)
-            .environmentObject(AppModel(bot: Bot()))
+            .environmentObject(ChatModel(bot: Bot()))
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseAnalytics
 
 struct KeyboardEntryView: View {
-    @EnvironmentObject var appModel: AppModel
+    @EnvironmentObject var chatModel: ChatModel
     @Binding var keyboardEntry: Bool
 
     @State private var text: String = ""
@@ -24,9 +24,9 @@ struct KeyboardEntryView: View {
                 .padding(.leading)
                 .padding(.bottom, 5)
                 .focused($textFieldFocused)
-                .disabled(appModel.chatState == .waitingForResponse || !keyboardEntry)
+                .disabled(chatModel.chatState == .waitingForResponse || !keyboardEntry)
 
-            if appModel.chatState == .waitingForResponse {
+            if chatModel.chatState == .waitingForResponse {
                 ProgressView()
                     .padding(.trailing)
                     .padding(.leading, 3)
@@ -59,7 +59,7 @@ struct KeyboardEntryView: View {
     private func sendMessage() {
         if !text.isEmpty {
             Analytics.logEvent("generate_from_keyboard", parameters: nil)
-            appModel.generateChatResponse(from: text)
+            chatModel.generateChatResponse(from: text)
         }
     }
 }
@@ -69,9 +69,9 @@ struct KeyboardEntryView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             KeyboardEntryView(keyboardEntry: $keyboardEntry)
-                .environmentObject(AppModel(bot: Bot()))
+                .environmentObject(ChatModel(bot: Bot()))
             KeyboardEntryView(keyboardEntry: $keyboardEntry)
-                .environmentObject(AppModel(bot: Bot(), chatState: .waitingForResponse))
+                .environmentObject(ChatModel(bot: Bot(), chatState: .waitingForResponse))
         }
     }
 }

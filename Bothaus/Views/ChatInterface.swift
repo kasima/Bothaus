@@ -1,5 +1,5 @@
 //
-//  TalkInterface.swift
+//  ChatInterface.swift
 //  Bothaus
 //
 //  Created by kasima on 3/14/23.
@@ -7,35 +7,35 @@
 
 import SwiftUI
 
-struct TalkInterface: View {
+struct ChatInterface: View {
     @ObservedObject var bot: Bot
 
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
 
-    @StateObject var appModel: AppModel
+    @StateObject var chatModel: ChatModel
     @State private var showEditBotView = false
     @AppStorage("keyboardEntry") private var keyboardEntry: Bool = false
 
-    init(bot: Bot, appModel: AppModel? = nil) {
+    init(bot: Bot, chatModel: ChatModel? = nil) {
         self.bot = bot
-        // if a appModel is passed in, just take it, rather than instantiate
-        if let appModel = appModel {
-            self._appModel = StateObject(wrappedValue: appModel)
+        // if a chatModel is passed in, just take it, rather than instantiate
+        if let chatModel = chatModel {
+            self._chatModel = StateObject(wrappedValue: chatModel)
         } else {
-            self._appModel = StateObject(wrappedValue: AppModel(bot: bot))
+            self._chatModel = StateObject(wrappedValue: ChatModel(bot: bot))
         }
     }
 
     var body: some View {
         VStack {
             ZStack {
-                ConversationView(systemPrompt: bot.systemPrompt ?? "", messages: appModel.messages)
+                ConversationView(systemPrompt: bot.systemPrompt ?? "", messages: chatModel.messages)
 
-                if (appModel.chatState == .listening && appModel.promptText != "") {
+                if (chatModel.chatState == .listening && chatModel.promptText != "") {
                     VStack {
                         Spacer()
-                        Text(appModel.promptText)
+                        Text(chatModel.promptText)
                             .font(.title)
                             .padding()
                             .frame(maxWidth: .infinity)
@@ -67,19 +67,19 @@ struct TalkInterface: View {
         .sheet(isPresented: $showEditBotView) {
             BotFormView(bot: bot, viewContext: viewContext)
         }
-        .environmentObject(appModel)
+        .environmentObject(chatModel)
         .onAppear() {
-            appModel.loaded()
-            // appModel.voiceTest()
+            chatModel.loaded()
+            // chatModel.voiceTest()
         }
     }
 }
 
-struct TalkInterface_Previews: PreviewProvider {
+struct ChatInterface_Previews: PreviewProvider {
     static var previews: some View {
         let bot = Bot.talkGPT(context: PersistenceController.preview.container.viewContext)
 
-        let appModel = AppModel(
+        let chatModel = ChatModel(
             bot: bot,
             chatState: .listening,
             promptText: bot.systemPrompt!,
@@ -96,7 +96,7 @@ struct TalkInterface_Previews: PreviewProvider {
         )
 
         NavigationStack {
-            TalkInterface(bot: bot, appModel: appModel)
+            ChatInterface(bot: bot, chatModel: chatModel)
         }
     }
 }
