@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import Speech
+import FirebaseAnalytics
 
 enum ChatState {
     case standby
@@ -80,6 +81,7 @@ final class ChatModel: ObservableObject, SpeechRecognizerDelegate {
     }
     
     func startRecording() {
+        Analytics.logEvent("start_mic", parameters: nil)
         do {
             try speechRecognizer?.startRecording()
         } catch {
@@ -112,6 +114,7 @@ final class ChatModel: ObservableObject, SpeechRecognizerDelegate {
     func didReceiveTranscription(_ transcription: String, isFinal: Bool) {
         promptText = transcription
         if isFinal {
+            Analytics.logEvent("generate_from_speech", parameters: nil)
             sendToChatGPTAPI()
         }
     }
@@ -193,6 +196,7 @@ final class ChatModel: ObservableObject, SpeechRecognizerDelegate {
     }
 
     func stopSpeaking() {
+        Analytics.logEvent("stop_speaking", parameters: nil)
         self.textToSpeech?.stopSpeaking()
         chatState = .standby
     }
