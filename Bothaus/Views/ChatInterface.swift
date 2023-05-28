@@ -28,27 +28,18 @@ struct ChatInterface: View {
     }
 
     var body: some View {
-        VStack {
-            ZStack {
+        ZStack {
+            VStack {
                 ConversationView(systemPrompt: bot.systemPrompt ?? "", messages: chatModel.messages)
-
-                if (chatModel.chatState == .listening && chatModel.promptText != "") {
-                    VStack {
-                        Spacer()
-                        Text(chatModel.promptText)
-                            .font(.title)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(.ultraThinMaterial)
-                            .foregroundColor(Color(UIColor.label))
-                    }
+                if keyboardEntry {
+                    KeyboardEntryView(keyboardEntry: $keyboardEntry)
                 }
             }
-
-            if keyboardEntry {
-                KeyboardEntryView(keyboardEntry: $keyboardEntry)
-            } else {
-                SpeechEntryView(keyboardEntry: $keyboardEntry)
+            if !keyboardEntry {
+                VStack {
+                    Spacer()
+                    SpeechEntryView(keyboardEntry: $keyboardEntry)
+                }
             }
         }
         .navigationBarTitle(bot.name ?? "")
@@ -82,7 +73,7 @@ struct ChatInterface_Previews: PreviewProvider {
         let chatModel = ChatModel(
             bot: bot,
             chatState: .listening,
-            promptText: bot.systemPrompt!,
+            promptText: "Are you sentient?",
             messages: [
                 Message(id: 1, role: "user", content: "Hey you"),
                 Message(id: 2, role: "assistant", content: "Who me?"),
