@@ -22,6 +22,7 @@ struct KeyboardEntryView: View {
                 .focused($textFieldFocused)
                 .padding(.leading)
                 .padding(.bottom, 5)
+                .disabled(!keyboardEntry)
 
             if chatModel.chatState == .waitingForResponse {
                 ProgressView()
