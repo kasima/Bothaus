@@ -17,14 +17,11 @@ struct KeyboardEntryView: View {
 
     var body: some View {
         HStack {
-            TextField("What do you want to see?", text: $text, onCommit: {
-                sendMessage()
-            })
+            TextField("What do you want to see?", text: $text, axis: .vertical)
                 .textFieldStyle(.roundedBorder)
+                .focused($textFieldFocused)
                 .padding(.leading)
                 .padding(.bottom, 5)
-                .focused($textFieldFocused)
-                .disabled(chatModel.chatState == .waitingForResponse || !keyboardEntry)
 
             if chatModel.chatState == .waitingForResponse {
                 ProgressView()
@@ -44,7 +41,6 @@ struct KeyboardEntryView: View {
                     }, label: {
                         Image(systemName: "paperplane.fill")
                     })
-                    .foregroundColor(.white)
                     .padding(.trailing)
                 }
             }
@@ -57,9 +53,11 @@ struct KeyboardEntryView: View {
     }
 
     private func sendMessage() {
-        if !text.isEmpty {
+        textFieldFocused = true
+        if (!text.isEmpty && chatModel.chatState == .standby) {
             Analytics.logEvent("generate_from_keyboard", parameters: nil)
             chatModel.generateChatResponse(from: text)
+            text = ""
         }
     }
 }

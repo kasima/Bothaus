@@ -23,7 +23,7 @@ struct Message {
 }
 
 final class ChatModel: ObservableObject, SpeechRecognizerDelegate {
-    private let maxConversationHistory = 5
+    private let maxConversationHistory = 10
 
     @Published var chatState = ChatState.standby
     @Published var promptText: String
@@ -151,8 +151,10 @@ final class ChatModel: ObservableObject, SpeechRecognizerDelegate {
                     }
                 }
             } catch {
-                print("chatgpt error")
-                self.chatState = .standby
+                DispatchQueue.main.async {
+                    print("chatgpt error")
+                    self.chatState = .standby
+                }
             }
         }
     }
@@ -187,7 +189,7 @@ final class ChatModel: ObservableObject, SpeechRecognizerDelegate {
 
     func speak(text: String) {
         guard text != "" else { return }
-        self.textToSpeech?.speak(text: self.responseText, voiceIdentifier: bot?.voiceIdentifier ?? defaultVoiceIdentifier)
+        self.textToSpeech?.speak(text: text, voiceIdentifier: bot?.voiceIdentifier ?? defaultVoiceIdentifier)
     }
 
     func stopSpeaking() {

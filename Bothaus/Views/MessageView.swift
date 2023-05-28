@@ -16,27 +16,50 @@ struct MessageFormat: ViewModifier {
 }
 
 struct MessageView: View {
+    @EnvironmentObject var chatModel: ChatModel
     var message: Message
+    @State var messageHeight = 0
 
     var body: some View {
-        HStack {
-            if (message.role == "user") {
+        if (message.role == "user") {
+            HStack {
                 Spacer()
                 Text(message.content)
+                    .textSelection(.enabled)
                     .modifier(MessageFormat())
                     .foregroundColor(Color.white)
                     .background(Color.blue)
                     .cornerRadius(10)
-            } else {
-                Text(message.content)
-                    .modifier(MessageFormat())
-                    .foregroundColor(Color.white)
-                    .background(Color(UIColor(red: 117/255, green: 169/255, blue: 156/255, alpha: 1.0)))
-                    .cornerRadius(10)
-                Spacer()
             }
+            .padding()
+        } else {
+            VStack {
+                HStack {
+                    Text(message.content)
+                        .textSelection(.enabled)
+                        .modifier(MessageFormat())
+                        .foregroundColor(Color.white)
+                        .background(Color(UIColor(red: 117/255, green: 169/255, blue: 156/255, alpha: 1.0)))
+                        .cornerRadius(10)
+                    Spacer()
+                }
+
+                HStack {
+                    Button(action: {
+                        chatModel.speak(text: message.content)
+                    }, label: {
+                        Image(systemName: "waveform")
+                            .foregroundColor(.secondary)
+                    })
+                    Spacer()
+                }
+                .padding(.leading)
+
+            }
+            .padding()
+            Spacer()
         }
-        .padding()
+
     }
 }
 
