@@ -18,6 +18,7 @@ struct KeyboardEntryView: View {
     var body: some View {
         HStack {
             TextField("What do you want to see?", text: $text, axis: .vertical)
+                .lineLimit(3)
                 .textFieldStyle(.roundedBorder)
                 .focused($textFieldFocused)
                 .padding(.leading)

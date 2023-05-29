@@ -13,16 +13,6 @@ struct SpeechEntryView: View {
 
     var body: some View {
         VStack {
-            // Prompt text overlay
-            if (chatModel.chatState == .listening && chatModel.promptText != "") {
-                Text(chatModel.promptText)
-                    .font(.title)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(.ultraThinMaterial)
-                    .foregroundColor(Color(UIColor.label))
-            }
-
             // UI Chrome
             ZStack {
                 HStack {

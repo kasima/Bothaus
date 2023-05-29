@@ -28,20 +28,32 @@ struct ChatInterface: View {
     }
 
     var body: some View {
-        ZStack {
-            VStack {
+        VStack {
+            ZStack {
                 ConversationView(systemPrompt: bot.systemPrompt ?? "", messages: chatModel.messages)
-                if keyboardEntry {
-                    KeyboardEntryView(keyboardEntry: $keyboardEntry)
-                }
-            }
-            if !keyboardEntry {
+
+                // Speech recognition result overlay
+                // NB - needs to be here because we want it in a ZStack with the conversation view
                 VStack {
                     Spacer()
-                    SpeechEntryView(keyboardEntry: $keyboardEntry)
+                    if (chatModel.chatState == .listening && chatModel.promptText != "" && !keyboardEntry) {
+                        Text(chatModel.promptText)
+                            .font(.title)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(.ultraThinMaterial)
+                            .foregroundColor(Color(UIColor.label))
+                    }
                 }
             }
+
+            if keyboardEntry {
+                KeyboardEntryView(keyboardEntry: $keyboardEntry)
+            } else {
+                SpeechEntryView(keyboardEntry: $keyboardEntry)
+            }
         }
+
         .navigationBarTitle(bot.name ?? "")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
