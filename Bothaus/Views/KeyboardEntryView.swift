@@ -12,8 +12,13 @@ struct KeyboardEntryView: View {
     @EnvironmentObject var chatModel: ChatModel
     @Binding var keyboardEntry: Bool
 
-    @State private var text: String = ""
+    @State private var text: String
     @FocusState private var textFieldFocused: Bool
+
+    init(keyboardEntry: Binding<Bool>, initialText: String = "") {
+        self._keyboardEntry = keyboardEntry
+        self.text = initialText
+    }
 
     var body: some View {
         HStack {
@@ -36,13 +41,15 @@ struct KeyboardEntryView: View {
                     }, label: {
                         Image(systemName: "waveform")
                     })
+                    .font(.title2)
                     .padding(.trailing)
                 } else {
                     Button(action: {
                         sendMessage()
                     }, label: {
-                        Image(systemName: "paperplane.fill")
+                        Image(systemName: "arrow.up.circle.fill")
                     })
+                    .font(.title2)
                     .padding(.trailing)
                 }
             }
@@ -69,6 +76,8 @@ struct KeyboardEntryView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             KeyboardEntryView(keyboardEntry: $keyboardEntry)
+                .environmentObject(ChatModel(bot: Bot()))
+            KeyboardEntryView(keyboardEntry: $keyboardEntry, initialText: "Are you alive?")
                 .environmentObject(ChatModel(bot: Bot()))
             KeyboardEntryView(keyboardEntry: $keyboardEntry)
                 .environmentObject(ChatModel(bot: Bot(), chatState: .waitingForResponse))
