@@ -48,8 +48,12 @@ struct MessageTextField: UIViewRepresentable {
 
     func makeUIView(context: Context) -> UITextField {
         let textField = UITextField()
+
         textField.delegate = context.coordinator
         textField.borderStyle = .roundedRect
+        // Keep this field from expanding - https://stackoverflow.com/a/66870686
+        textField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+
         return textField
     }
 
