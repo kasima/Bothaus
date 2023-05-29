@@ -13,7 +13,7 @@ struct KeyboardEntryView: View {
     @Binding var keyboardEntry: Bool
 
     @State private var text: String
-    @FocusState private var textFieldFocused: Bool
+    @State private var textFieldFocused: Bool = true
 
     init(keyboardEntry: Binding<Bool>, initialText: String = "") {
         self._keyboardEntry = keyboardEntry
@@ -22,13 +22,12 @@ struct KeyboardEntryView: View {
 
     var body: some View {
         HStack {
-            TextField("What do you want to see?", text: $text, axis: .vertical)
-                .lineLimit(3)
-                .textFieldStyle(.roundedBorder)
-                .focused($textFieldFocused)
+            MessageTextField(text: $text, focused: $textFieldFocused, onCommit: {
+                sendMessage()
+            })
+                .frame(height: UIFont.systemFont(ofSize: UIFont.systemFontSize).lineHeight + 15)
                 .padding(.leading)
                 .padding(.bottom, 5)
-                .disabled(!keyboardEntry)
 
             if chatModel.chatState == .waitingForResponse {
                 ProgressView()
@@ -37,6 +36,7 @@ struct KeyboardEntryView: View {
             } else {
                 if text.isEmpty {
                     Button(action: {
+                        textFieldFocused = false
                         keyboardEntry = false
                     }, label: {
                         Image(systemName: "waveform")
@@ -62,7 +62,6 @@ struct KeyboardEntryView: View {
     }
 
     private func sendMessage() {
-        textFieldFocused = true
         if (!text.isEmpty && chatModel.chatState == .standby) {
             Analytics.logEvent("generate_from_keyboard", parameters: nil)
             chatModel.generateChatResponse(from: text)
