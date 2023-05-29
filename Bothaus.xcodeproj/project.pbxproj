@@ -56,7 +56,6 @@
 		86E80D7E29BD68C300C2BEBA /* Bothaus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 86E80D7C29BD68C300C2BEBA /* Bothaus.xcdatamodeld */; };
 		86E80D7F29BD68C300C2BEBA /* Bothaus.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 86E80D7C29BD68C300C2BEBA /* Bothaus.xcdatamodeld */; };
 		86FEFE0C2A23416900740710 /* MessageTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FEFE0B2A23416900740710 /* MessageTextField.swift */; };
-		86FEFE0E2A23424E00740710 /* MessageTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FEFE0D2A23424E00740710 /* MessageTextFieldDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,7 +108,6 @@
 		86E80D7D29BD68C300C2BEBA /* Bothaus.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bothaus.xcdatamodel; sourceTree = "<group>"; };
 		86EC715829CA964000C21802 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		86FEFE0B2A23416900740710 /* MessageTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextField.swift; sourceTree = "<group>"; };
-		86FEFE0D2A23424E00740710 /* MessageTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextFieldDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,7 +213,6 @@
 				865025AB29C179D100E11895 /* Persistence.swift */,
 				86BEDC7729C2BD4300D34E9C /* Bot+Examples.swift */,
 				867F35DB29C9791700339C95 /* BotFormViewModel.swift */,
-				86FEFE0D2A23424E00740710 /* MessageTextFieldDelegate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -398,7 +395,6 @@
 				86BEDC7829C2BD4300D34E9C /* Bot+Examples.swift in Sources */,
 				86DB0BBD2A21B09400289A4C /* SecretsHelper.swift in Sources */,
 				865025AE29C183BD00E11895 /* BotFormView.swift in Sources */,
-				86FEFE0E2A23424E00740710 /* MessageTextFieldDelegate.swift in Sources */,
 				86944FEE29B995F600201F2E /* SpeechRecognizer.swift in Sources */,
 				86944FB929B989A100201F2E /* BothausApp.swift in Sources */,
 				8694500329B9DAD100201F2E /* MicButton.swift in Sources */,

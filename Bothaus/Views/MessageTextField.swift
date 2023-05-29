@@ -8,45 +8,69 @@
 import SwiftUI
 import UIKit
 
-class StyledTextField: UITextField {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.layer.cornerRadius = 5
-        self.borderStyle = .roundedRect
-        self.layer.borderColor = UIColor.lightGray.cgColor
-        self.layer.borderWidth = 1
-        self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: frame.height))
-        self.leftViewMode = .always
-        self.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: frame.height))
-        self.rightViewMode = .always
-        self.clearButtonMode = .whileEditing
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
 
 struct MessageTextField: UIViewRepresentable {
     @Binding var text: String
-    let textFieldDelegate: UITextFieldDelegate
+    @Binding var focused: Bool
+    var onCommit: (() -> Void)?
+
+    class Coordinator: NSObject, UITextFieldDelegate {
+        @Binding var text: String
+        @Binding var focused: Bool
+        var onCommit: (() -> Void)?
+
+        init(text: Binding<String>, focused: Binding<Bool>, onCommit: (() -> Void)? = nil) {
+            _text = text
+            _focused = focused
+            self.onCommit = onCommit
+        }
+
+        func textFieldDidChangeSelection(_ textField: UITextField) {
+            DispatchQueue.main.async {
+                self.text = textField.text ?? ""
+            }
+        }
+
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            onCommit?()
+            return true
+        }
+
+        func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            // perform your UITextFieldDelegate methods here
+            return true
+        }
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(text: $text, focused: $focused, onCommit: onCommit)
+    }
 
     func makeUIView(context: Context) -> UITextField {
-        let textField = StyledTextField(frame: .zero)
-
-        textField.delegate = textFieldDelegate
+        let textField = UITextField()
+        textField.delegate = context.coordinator
+        textField.borderStyle = .roundedRect
         return textField
     }
 
     func updateUIView(_ uiView: UITextField, context: Context) {
         uiView.text = text
+        if focused && !uiView.isFirstResponder {
+            uiView.becomeFirstResponder()
+        } else if !focused && uiView.isFirstResponder {
+            UIView.setAnimationsEnabled(false)
+            uiView.resignFirstResponder()
+            UIView.setAnimationsEnabled(true)
+        }
     }
 }
 
 struct MessageTextField_Previews: PreviewProvider {
     @State static var text: String = "some text"
+    @State static var focused: Bool = true
 
     static var previews: some View {
-        MessageTextField(text: $text, textFieldDelegate: MessageTextFieldDelegate())
+        MessageTextField(text: $text, focused: $focused, onCommit: {})
+            .frame(maxHeight: 40)
     }
 }

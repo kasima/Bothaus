@@ -31,7 +31,7 @@ enum OpenAIError: Error {
 }
 
 class OpenAIService {
-    private let testing = true
+    private let testing = false
     private let chatUrl = "https://api.openai.com/v1/chat/completions"
     private let model = "gpt-3.5-turbo"
     private var apiKey: String = ""
@@ -57,7 +57,7 @@ class OpenAIService {
 
     func generateNextAssistantMessage(system: String, messages: [ChatMessage]) async throws -> ChatMessage {
         if testing {
-            sleep(10)
+            sleep(1)
             let testResponses = [
                 "This is test one. What do you call an alligator in a vest? An investigator.",
                 "This is test two. I told my wife she was drawing her eyebrows too high. She looked surprised.",
