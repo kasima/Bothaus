@@ -48,6 +48,7 @@ struct ConversationView: View {
                     }
                 }
             }
+            .scrollDismissesKeyboard(.interactively)
         }
     }
 
