@@ -53,8 +53,11 @@ struct ConversationView: View {
     }
 
     private func performScrollToBottom(proxy: ScrollViewProxy) {
-        withAnimation {
-            proxy.scrollTo(chatModel.messages.last?.id, anchor: .bottom)
+        // Wait a moment for the keyboard to finish animating in so that the bottom is calculated correctly
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+            withAnimation {
+                proxy.scrollTo(chatModel.messages.last?.id, anchor: .bottom)
+            }
         }
     }
 }
