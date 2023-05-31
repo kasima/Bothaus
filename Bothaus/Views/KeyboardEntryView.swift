@@ -31,6 +31,7 @@ struct KeyboardEntryView: View {
                 ProgressView()
                     .padding(.trailing)
                     .padding(.leading, 3)
+                    .padding(.bottom, 5)
             } else {
                 if chatModel.keyboardEntryText.isEmpty {
                     Button(action: {
@@ -41,6 +42,7 @@ struct KeyboardEntryView: View {
                     })
                     .font(.title2)
                     .padding(.trailing)
+                    .padding(.bottom, 5)
                 } else {
                     Button(action: {
                         sendMessage()
@@ -49,6 +51,7 @@ struct KeyboardEntryView: View {
                     })
                     .font(.title2)
                     .padding(.trailing)
+                    .padding(.bottom, 5)
                 }
             }
         }
