@@ -16,6 +16,7 @@ struct ChatInterface: View {
     @StateObject var chatModel: ChatModel
     @State private var showEditBotView = false
     @AppStorage("keyboardEntry") private var keyboardEntry: Bool = false
+    @State private var scrollToBottom: Bool = false
 
     init(bot: Bot, chatModel: ChatModel? = nil) {
         self.bot = bot
@@ -28,9 +29,14 @@ struct ChatInterface: View {
     }
 
     var body: some View {
+
         VStack {
             ZStack {
-                ConversationView(systemPrompt: bot.systemPrompt ?? "", messages: chatModel.messages)
+                ConversationView(
+                    systemPrompt: bot.systemPrompt ?? "",
+                    messages: chatModel.messages,
+                    scrollToBottom: $scrollToBottom
+                )
 
                 // Speech recognition result overlay
                 // NB - needs to be here because we want it in a ZStack with the conversation view
@@ -52,7 +58,7 @@ struct ChatInterface: View {
             } else {
                 SpeechEntryView(keyboardEntry: $keyboardEntry)
             }
-        }
+        } // VStack
 
         .navigationBarTitle(bot.name ?? "")
         .navigationBarTitleDisplayMode(.inline)
@@ -74,6 +80,9 @@ struct ChatInterface: View {
         .onAppear() {
             chatModel.loaded()
             // chatModel.voiceTest()
+        }
+        .onChange(of: keyboardEntry) { newValue in
+            scrollToBottom = true
         }
     }
 }

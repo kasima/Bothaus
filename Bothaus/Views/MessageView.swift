@@ -57,7 +57,6 @@ struct MessageView: View {
 
             }
             .padding()
-            Spacer()
         }
 
     }
