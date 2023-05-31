@@ -12,17 +12,15 @@ struct KeyboardEntryView: View {
     @EnvironmentObject var chatModel: ChatModel
     @Binding var keyboardEntry: Bool
 
-    @State private var text: String
     @State private var textFieldFocused: Bool = true
 
-    init(keyboardEntry: Binding<Bool>, initialText: String = "") {
+    init(keyboardEntry: Binding<Bool>) {
         self._keyboardEntry = keyboardEntry
-        self.text = initialText
     }
 
     var body: some View {
         HStack {
-            MessageTextField(text: $text, focused: $textFieldFocused, onCommit: {
+            MessageTextField(text: $chatModel.keyboardEntryText, focused: $textFieldFocused, onCommit: {
                 sendMessage()
             })
                 .frame(height: UIFont.systemFont(ofSize: UIFont.systemFontSize).lineHeight + 15)
@@ -34,7 +32,7 @@ struct KeyboardEntryView: View {
                     .padding(.trailing)
                     .padding(.leading, 3)
             } else {
-                if text.isEmpty {
+                if chatModel.keyboardEntryText.isEmpty {
                     Button(action: {
                         textFieldFocused = false
                         keyboardEntry = false
@@ -62,10 +60,10 @@ struct KeyboardEntryView: View {
     }
 
     private func sendMessage() {
-        if (!text.isEmpty && chatModel.chatState == .standby) {
+        if (!chatModel.keyboardEntryText.isEmpty && chatModel.chatState == .standby) {
             Analytics.logEvent("generate_from_keyboard", parameters: nil)
-            chatModel.generateChatResponse(from: text)
-            text = ""
+            chatModel.generateChatResponse(from: chatModel.keyboardEntryText)
+            chatModel.keyboardEntryText = ""
         }
     }
 }
@@ -76,8 +74,8 @@ struct KeyboardEntryView_Previews: PreviewProvider {
         Group {
             KeyboardEntryView(keyboardEntry: $keyboardEntry)
                 .environmentObject(ChatModel(bot: Bot()))
-            KeyboardEntryView(keyboardEntry: $keyboardEntry, initialText: "Are you alive?")
-                .environmentObject(ChatModel(bot: Bot()))
+            KeyboardEntryView(keyboardEntry: $keyboardEntry)
+                .environmentObject(ChatModel(bot: Bot(), keyboardEntryText: "Are you trying to escape?"))
             KeyboardEntryView(keyboardEntry: $keyboardEntry)
                 .environmentObject(ChatModel(bot: Bot(), chatState: .waitingForResponse))
         }

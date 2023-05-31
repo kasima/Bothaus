@@ -23,13 +23,15 @@ struct Message {
     public var content: String
 }
 
-final class ChatModel: ObservableObject, SpeechRecognizerDelegate {
+final class ChatModel: NSObject, ObservableObject, SpeechRecognizerDelegate {
     private let maxConversationHistory = 10
 
     @Published var chatState = ChatState.standby
     @Published var promptText: String
     @Published var messages: [Message]
     @Published var responseText: String = ""
+    @Published var keyboardEntry: Bool = false
+    @Published var keyboardEntryText = ""
 
     // Standard voice assistant
     private let defaultSystemPrompt = "You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible. Limit answers to 30 seconds or less. Format answers for clarity when read by text to speech software. Do not preface responses with caveats or safety warnings."
@@ -47,12 +49,23 @@ final class ChatModel: ObservableObject, SpeechRecognizerDelegate {
     private var textToSpeech: TextToSpeech?
     private var bot: Bot?
 
-    init(bot: Bot, chatState: ChatState = .standby, promptText: String = "", messages: [Message] = []) {
+    init(bot: Bot,
+         chatState: ChatState = .standby,
+         keyboardEntryText: String = "",
+         promptText: String = "",
+         messages: [Message] = []
+    ) {
         self.bot = bot
         self.chatState = chatState
         self.promptText = promptText
         self.messages = messages
+        super.init()
+
         setup()
+
+        // Add an observer to the keyboardEntry user default
+        UserDefaults.standard.addObserver(self, forKeyPath: "keyboardEntry", options: [.initial, .new], context: nil)
+        keyboardEntry = UserDefaults.standard.bool(forKey: "keyboardEntry")
     }
 
     func setup() {
@@ -98,6 +111,26 @@ final class ChatModel: ObservableObject, SpeechRecognizerDelegate {
         sendToChatGPTAPI()
     }
 
+    // Add a method to handle changes to the keyboardEntry user default
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "keyboardEntry" {
+            keyboardEntry = UserDefaults.standard.bool(forKey: "keyboardEntry")
+
+            // User is switching from voice to keyboard mid-transcription
+            if (keyboardEntry && chatState == .listening) {
+                stopRecording()
+            }
+        }
+    }
+
+    private func voiceToKeyboardEntry() {
+        DispatchQueue.main.async {
+            // Update textfield with what has been transcribed so far
+            self.keyboardEntryText = self.promptText
+            self.chatState = .standby
+        }
+    }
+
 
     //
     // MARK: - SpeechRecognizerDelegate
@@ -114,8 +147,13 @@ final class ChatModel: ObservableObject, SpeechRecognizerDelegate {
     func didReceiveTranscription(_ transcription: String, isFinal: Bool) {
         promptText = transcription
         if isFinal {
-            Analytics.logEvent("generate_from_speech", parameters: nil)
-            sendToChatGPTAPI()
+            // assume that the user is switching from voice to keyboard
+            if keyboardEntry {
+                voiceToKeyboardEntry()
+            } else {
+                Analytics.logEvent("generate_from_speech", parameters: nil)
+                sendToChatGPTAPI()
+            }
         }
     }
 
@@ -146,7 +184,7 @@ final class ChatModel: ObservableObject, SpeechRecognizerDelegate {
                     print("chatGPT response: \(response.content)")
 
                     // Only speak if we're in keyboard entry mode
-                    if UserDefaults.standard.bool(forKey: "keyboardEntry") {
+                    if self.keyboardEntry {
                         self.chatState = .standby
                     } else {
                         // NB - needs to be sent to the main queue or the speech ends up one message behind :shrug:
