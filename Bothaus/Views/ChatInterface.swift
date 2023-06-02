@@ -76,13 +76,19 @@ struct ChatInterface: View {
         .sheet(isPresented: $showEditBotView) {
             BotFormView(bot: bot, viewContext: viewContext)
         }
+        .onChange(of: keyboardEntry) { newValue in
+            scrollToBottom = true
+        }
         .environmentObject(chatModel)
         .onAppear() {
             chatModel.loaded()
             // chatModel.voiceTest()
         }
-        .onChange(of: keyboardEntry) { newValue in
-            scrollToBottom = true
+        .onDisappear {
+            chatModel.stopSpeaking()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+            chatModel.stopSpeaking()
         }
     }
 }

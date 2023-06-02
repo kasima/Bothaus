@@ -51,6 +51,7 @@ struct MessageView: View {
                         Image(systemName: "waveform")
                             .foregroundColor(.secondary)
                     })
+                    .disabled(chatModel.chatState == .speaking)
                     Spacer()
                 }
                 .padding(.leading)

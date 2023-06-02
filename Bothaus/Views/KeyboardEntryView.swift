@@ -32,6 +32,17 @@ struct KeyboardEntryView: View {
                     .padding(.trailing)
                     .padding(.leading, 3)
                     .padding(.bottom, 5)
+            } else if chatModel.chatState == .speaking {
+                Button(action: {
+                    chatModel.stopSpeaking()
+                }, label: {
+                    Image(systemName: "speaker.slash")
+                        .font(.title2)
+                        .padding(.bottom, 1)
+                })
+                .font(.title2)
+                .padding(.trailing)
+                .padding(.bottom, 5)
             } else {
                 if chatModel.keyboardEntryText.isEmpty {
                     Button(action: {
