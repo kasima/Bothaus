@@ -76,5 +76,6 @@ struct ConversationView_Previews: PreviewProvider {
                 ]
             )
         }
+        .environmentObject(ChatModel(bot: Bot()))
     }
 }

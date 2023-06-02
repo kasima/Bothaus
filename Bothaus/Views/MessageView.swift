@@ -17,8 +17,9 @@ struct MessageFormat: ViewModifier {
 
 struct MessageView: View {
     @EnvironmentObject var chatModel: ChatModel
-    var message: Message
     @State var messageHeight = 0
+
+    var message: Message
 
     var body: some View {
         if (message.role == "user") {
@@ -45,13 +46,24 @@ struct MessageView: View {
                 }
 
                 HStack {
-                    Button(action: {
-                        chatModel.speak(text: message.content)
-                    }, label: {
-                        Image(systemName: "waveform")
-                            .foregroundColor(.secondary)
-                    })
-                    .disabled(chatModel.chatState == .speaking)
+                    if (chatModel.chatState == .speaking && chatModel.speakingMessageId == message.id) {
+                        Button(action: {
+                            chatModel.stopSpeaking()
+                        }, label: {
+                            Image(systemName: "speaker.slash.fill")
+                                .foregroundColor(.secondary)
+                                .padding(.top, 0)
+                        })
+                    } else {
+                        Button(action: {
+                            chatModel.speakMessage(id: message.id)
+                        }, label: {
+                            Image(systemName: "waveform")
+                                .foregroundColor(.secondary)
+                                .padding(.top, 0)
+                        })
+                        .disabled(chatModel.chatState == .speaking)
+                    }
                     Spacer()
                 }
                 .padding(.leading)
@@ -65,10 +77,18 @@ struct MessageView: View {
 
 struct MessageView_Previews: PreviewProvider {
     static var previews: some View {
+        let chatModel = ChatModel(bot: Bot(), chatState: .standby)
+        let speakingChatModel = ChatModel(bot: Bot(), chatState: .speaking, speakingMessageId: 2)
+
         Group {
             MessageView(message: Message(id: 1, role: "user", content: "Hey bot, tell me a nice little story."))
-            MessageView(message: Message(id: 2, role: "assistant", content: "I told my wife she was drawing her eyebrows too high. She looked surprised.")
-            )
+                .environmentObject(chatModel)
+
+            MessageView(message: Message(id: 2, role: "assistant", content: "I told my wife she was drawing her eyebrows too high. She looked surprised."))
+                .environmentObject(chatModel)
+
+            MessageView(message: Message(id: 2, role: "assistant", content: "I told my wife she was drawing her eyebrows too high. She looked surprised."))
+                .environmentObject(speakingChatModel)
         }
     }
 }
