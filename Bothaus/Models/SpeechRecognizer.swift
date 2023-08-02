@@ -69,12 +69,17 @@ class SpeechRecognizer {
     private var task: SFSpeechRecognitionTask?
     private let recognizer: SFSpeechRecognizer?
     private var recognitionTimer: Timer?
+    private var disablePauseDetection = false
 
     private weak var delegate: SpeechRecognizerDelegate?
 
     init(delegate: SpeechRecognizerDelegate) {
         self.delegate = delegate
         self.recognizer = SFSpeechRecognizer()
+        print("pause detection: \(self.disablePauseDetection)")
+        self.disablePauseDetection = UserDefaults.standard.bool(forKey: "disable_pause_detection")
+        print("pause detection: \(self.disablePauseDetection)")
+
         Task {
             do {
                 guard recognizer != nil else {
@@ -147,7 +152,9 @@ class SpeechRecognizer {
 
             self.delegate?.didReceiveTranscription(result.bestTranscription.formattedString, isFinal: result.isFinal)
 
-            self.setRecognitionTimer(isFinal: result.isFinal)
+            if !self.disablePauseDetection {
+                self.setRecognitionTimer(isFinal: result.isFinal)
+            }
 
             if result.isFinal {
                 self.stopRecording()
