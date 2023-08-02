@@ -1,5 +1,5 @@
 //
-//  ChatButton.swift
+//  MicButton.swift
 //  Bothaus
 //
 //  Created by kasima on 3/9/23.
@@ -7,22 +7,22 @@
 
 import SwiftUI
 
-struct ChatButton: View {
+struct MicButton: View {
     var state: ChatState
 
-    @EnvironmentObject var talkModel: TalkModel
+    @EnvironmentObject var chatModel: ChatModel
 
     var body: some View {
         Button(action: {
             switch state {
             case .standby:
-                talkModel.startRecording()
+                chatModel.startRecording()
             case .listening:
-                talkModel.stopRecording()
+                chatModel.stopRecording()
             case .waitingForResponse:
                 print("Should be something else in here")
             case .speaking:
-                talkModel.stopSpeaking()
+                chatModel.stopSpeaking()
             }
         }, label: {
             VStack {
@@ -75,15 +75,15 @@ struct ChatButton: View {
     }
 }
 
-struct ChatButton_Previews: PreviewProvider {
+struct MicButton_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ChatButton(state: .standby)
-            ChatButton(state: .listening)
-            ChatButton(state: .waitingForResponse)
-            ChatButton(state: .speaking)
+            MicButton(state: .standby)
+            MicButton(state: .listening)
+            MicButton(state: .waitingForResponse)
+            MicButton(state: .speaking)
         }
-        .environmentObject(TalkModel(bot: Bot()))
+        .environmentObject(ChatModel(bot: Bot()))
         .previewLayout(.fixed(width:300, height: 100))
     }
 }

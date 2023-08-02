@@ -1,5 +1,5 @@
 //
-// TalkModel.swift
+// ChatModel.swift
 // Bothaus
 //
 // Created by kasima on 3/5/23.
@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import Speech
+import FirebaseAnalytics
 
 enum ChatState {
     case standby
@@ -22,13 +23,26 @@ struct Message {
     public var content: String
 }
 
-final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
-    private let maxConversationHistory = 5
+final class ChatModel: NSObject, ObservableObject, SpeechRecognizerDelegate {
+    private let maxConversationHistory = 10
 
     @Published var chatState = ChatState.standby
+
+    /// Transcription results, both in-process and final
     @Published var promptText: String
+
+    /// Conversation consisting of user and assistant messages
     @Published var messages: [Message]
-    @Published var responseText: String = ""
+
+    /// Indicates whether interface is in keyboard entry mode
+    @Published var keyboardEntry: Bool = false
+
+    /// Contents of keyboard entry TextField, used to pre-fill with voice transcription
+    @Published var keyboardEntryText = ""
+
+    /// The id of the Message that is currently being spoken by text to speech
+    @Published var speakingMessageId: Int?
+
 
     // Standard voice assistant
     private let defaultSystemPrompt = "You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible. Limit answers to 30 seconds or less. Format answers for clarity when read by text to speech software. Do not preface responses with caveats or safety warnings."
@@ -46,22 +60,36 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
     private var textToSpeech: TextToSpeech?
     private var bot: Bot?
 
-    init(bot: Bot, chatState: ChatState = .standby, promptText: String = "", messages: [Message] = []) {
+    init(bot: Bot,
+         chatState: ChatState = .standby,
+         keyboardEntryText: String = "",
+         promptText: String = "",
+         messages: [Message] = [],
+         speakingMessageId: Int? = nil
+    ) {
         self.bot = bot
         self.chatState = chatState
         self.promptText = promptText
         self.messages = messages
+        self.speakingMessageId = speakingMessageId
+        super.init()
+
         setup()
+
+        // Add an observer to the keyboardEntry user default
+        UserDefaults.standard.addObserver(self, forKeyPath: "keyboardEntry", options: [.initial, .new], context: nil)
+        keyboardEntry = UserDefaults.standard.bool(forKey: "keyboardEntry")
     }
 
     func setup() {
         speechRecognizer = SpeechRecognizer(delegate: self)
-        speechDelegate = SpeechDelegate(talkModel: self)
+        speechDelegate = SpeechDelegate(chatModel: self)
         textToSpeech = TextToSpeech(delegate: speechDelegate!)
     }
 
     func loaded() {
-        textToSpeech?.speak(text: bot?.name ?? "", voiceIdentifier: bot?.voiceIdentifier ?? defaultVoiceIdentifier)
+        // Say the bot name
+        // textToSpeech?.speak(text: bot?.name ?? "", voiceIdentifier: bot?.voiceIdentifier ?? defaultVoiceIdentifier)
     }
     
     func voiceTest() {
@@ -79,6 +107,7 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
     }
     
     func startRecording() {
+        Analytics.logEvent("start_mic", parameters: nil)
         do {
             try speechRecognizer?.startRecording()
         } catch {
@@ -88,6 +117,31 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
     
     func stopRecording() {
         speechRecognizer?.stopRecording()
+    }
+
+    func generateChatResponse(from messageText: String) {
+        promptText = messageText
+        sendToChatGPTAPI()
+    }
+
+    // Add a method to handle changes to the keyboardEntry user default
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "keyboardEntry" {
+            keyboardEntry = UserDefaults.standard.bool(forKey: "keyboardEntry")
+
+            // User is switching from voice to keyboard mid-transcription
+            if (keyboardEntry && chatState == .listening) {
+                stopRecording()
+            }
+        }
+    }
+
+    private func voiceToKeyboardEntry() {
+        DispatchQueue.main.async {
+            // Update textfield with what has been transcribed so far
+            self.keyboardEntryText = self.promptText
+            self.chatState = .standby
+        }
     }
 
 
@@ -106,7 +160,13 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
     func didReceiveTranscription(_ transcription: String, isFinal: Bool) {
         promptText = transcription
         if isFinal {
-            sendToChatGPTAPI()
+            // assume that the user is switching from voice to keyboard
+            if keyboardEntry {
+                voiceToKeyboardEntry()
+            } else {
+                Analytics.logEvent("generate_from_speech", parameters: nil)
+                sendToChatGPTAPI()
+            }
         }
     }
 
@@ -132,26 +192,36 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
                     messages: recentMessages()
                 )
                 DispatchQueue.main.async {
-                    self.addAssistantMessage(message: response)
-                    self.responseText = response.content
+                    let message = self.addAssistantMessage(message: response)
                     print("chatGPT response: \(response.content)")
-                    // NB - needs to be sent to the main queue or the speech ends up one message behind :shrug:
-                    self.speak(text: self.responseText)
+
+                    // Only speak if we're in keyboard entry mode
+                    if self.keyboardEntry {
+                        self.chatState = .standby
+                    } else {
+                        // NB - needs to be sent to the main queue or the speech ends up one message behind :shrug:
+                        self.speakMessage(id: message.id)
+                    }
                 }
             } catch {
-                print("chatgpt error")
-                self.chatState = .standby
+                DispatchQueue.main.async {
+                    print("chatgpt error")
+                    self.chatState = .standby
+                }
             }
         }
     }
 
-    private func addUserMessage() {
+    @discardableResult
+    private func addUserMessage() -> Message {
         let newMessage = Message(id: messages.count, role: "user", content: promptText)
         self.messages.append(newMessage)
         print(messages)
 
         // Clear the promptText once the message shows up in history
         promptText = ""
+
+        return newMessage
     }
 
     private func recentMessages() -> [ChatMessage] {
@@ -163,9 +233,11 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
         return chatMessages
     }
 
-    private func addAssistantMessage(message: ChatMessage) {
+    @discardableResult
+    private func addAssistantMessage(message: ChatMessage) -> Message {
         let newMessage = Message(id: messages.count, role: message.role, content: message.content)
         messages.append(newMessage)
+        return newMessage
     }
 
 
@@ -175,10 +247,24 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
 
     func speak(text: String) {
         guard text != "" else { return }
-        self.textToSpeech?.speak(text: self.responseText, voiceIdentifier: bot?.voiceIdentifier ?? defaultVoiceIdentifier)
+        self.textToSpeech?.speak(text: text, voiceIdentifier: bot?.voiceIdentifier ?? defaultVoiceIdentifier)
+    }
+
+    func speakMessage(id: Int) {
+        if let message = messages.first(where: { $0.id == id }) {
+            speakingMessageId = message.id
+            speak(text: message.content)
+        }
+    }
+
+    func speakLastMessage() {
+        if let message = messages.last {
+            speakMessage(id: message.id)
+        }
     }
 
     func stopSpeaking() {
+        Analytics.logEvent("stop_speaking", parameters: nil)
         self.textToSpeech?.stopSpeaking()
         chatState = .standby
     }
@@ -189,5 +275,6 @@ final class TalkModel: ObservableObject, SpeechRecognizerDelegate {
 
     func didStopSpeech() {
         self.chatState = .standby
+        self.speakingMessageId = nil
     }
 }

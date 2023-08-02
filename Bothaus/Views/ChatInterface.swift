@@ -1,5 +1,5 @@
 //
-//  TalkInterface.swift
+//  ChatInterface.swift
 //  Bothaus
 //
 //  Created by kasima on 3/14/23.
@@ -7,34 +7,43 @@
 
 import SwiftUI
 
-struct TalkInterface: View {
+struct ChatInterface: View {
     @ObservedObject var bot: Bot
 
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
 
-    @StateObject var talkModel: TalkModel
+    @StateObject var chatModel: ChatModel
     @State private var showEditBotView = false
+    @AppStorage("keyboardEntry") private var keyboardEntry: Bool = false
+    @State private var scrollToBottom: Bool = false
 
-    init(bot: Bot, talkModel: TalkModel? = nil) {
+    init(bot: Bot, chatModel: ChatModel? = nil) {
         self.bot = bot
-        // if a talkModel is passed in, just take it, rather than instantiate
-        if let talkModel = talkModel {
-            self._talkModel = StateObject(wrappedValue: talkModel)
+        // if a chatModel is passed in, just take it, rather than instantiate
+        if let chatModel = chatModel {
+            self._chatModel = StateObject(wrappedValue: chatModel)
         } else {
-            self._talkModel = StateObject(wrappedValue: TalkModel(bot: bot))
+            self._chatModel = StateObject(wrappedValue: ChatModel(bot: bot))
         }
     }
 
     var body: some View {
+
         VStack {
             ZStack {
-                ChatView(systemPrompt: bot.systemPrompt ?? "", messages: talkModel.messages)
+                ConversationView(
+                    systemPrompt: bot.systemPrompt ?? "",
+                    messages: chatModel.messages,
+                    scrollToBottom: $scrollToBottom
+                )
 
-                if (talkModel.chatState == .listening && talkModel.promptText != "") {
-                    VStack {
-                        Spacer()
-                        Text(talkModel.promptText)
+                // Speech recognition result overlay
+                // NB - needs to be here because we want it in a ZStack with the conversation view
+                VStack {
+                    Spacer()
+                    if (chatModel.chatState == .listening && chatModel.promptText != "" && !keyboardEntry) {
+                        Text(chatModel.promptText)
                             .font(.title)
                             .padding()
                             .frame(maxWidth: .infinity)
@@ -44,22 +53,13 @@ struct TalkInterface: View {
                 }
             }
 
-            ZStack {
-                ChatButton(state: talkModel.chatState)
-                    .padding()
-
-                HStack {
-                    Spacer()
-                    Button("Clear") {
-                        talkModel.clearMessages()
-                    }
-                    .font(.title2)
-                    .padding()
-                    .frame(width: (UIScreen.main.bounds.width-100) / 2)
-                }
+            if keyboardEntry {
+                KeyboardEntryView(keyboardEntry: $keyboardEntry)
+            } else {
+                SpeechEntryView(keyboardEntry: $keyboardEntry)
             }
-            .background(Color(UIColor.systemGray6))
-        }
+        } // VStack
+
         .navigationBarTitle(bot.name ?? "")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -76,22 +76,31 @@ struct TalkInterface: View {
         .sheet(isPresented: $showEditBotView) {
             BotFormView(bot: bot, viewContext: viewContext)
         }
-        .environmentObject(talkModel)
+        .onChange(of: keyboardEntry) { newValue in
+            scrollToBottom = true
+        }
+        .environmentObject(chatModel)
         .onAppear() {
-            talkModel.loaded()
-            // talkModel.voiceTest()
+            chatModel.loaded()
+            // chatModel.voiceTest()
+        }
+        .onDisappear {
+            chatModel.stopSpeaking()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+            chatModel.stopSpeaking()
         }
     }
 }
 
-struct TalkInterface_Previews: PreviewProvider {
+struct ChatInterface_Previews: PreviewProvider {
     static var previews: some View {
         let bot = Bot.talkGPT(context: PersistenceController.preview.container.viewContext)
 
-        let talkModel = TalkModel(
+        let chatModel = ChatModel(
             bot: bot,
             chatState: .listening,
-            promptText: bot.systemPrompt!,
+            promptText: "Are you sentient?",
             messages: [
                 Message(id: 1, role: "user", content: "Hey you"),
                 Message(id: 2, role: "assistant", content: "Who me?"),
@@ -105,7 +114,7 @@ struct TalkInterface_Previews: PreviewProvider {
         )
 
         NavigationStack {
-            TalkInterface(bot: bot, talkModel: talkModel)
+            ChatInterface(bot: bot, chatModel: chatModel)
         }
     }
 }
